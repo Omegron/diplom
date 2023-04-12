@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/articles"
+            android:title="@string/menu_articles" />
+        <item
+            android:id="@+id/diary"
+            android:title="@string/menu_diary" />
+        <item
+            android:id="@+id/planner"
+            android:title="@string/menu_planner" />
+        <item
+            android:id="@+id/notes"
+            android:title="@string/menu_notes" />
+        <item
+            android:id="@+id/settings"
+            android:title="@string/menu_settings" />
+    </group>
+
+</menu>
