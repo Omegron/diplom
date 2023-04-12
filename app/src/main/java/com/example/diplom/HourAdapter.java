@@ -18,7 +18,7 @@ public class HourAdapter extends ArrayAdapter<HourEvent> {
     public HourAdapter(@NonNull Context context, List<HourEvent> hourEvents) {
         super(context, 0, hourEvents);
     }
-
+    // Test 1
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
