@@ -20,7 +20,7 @@ import java.util.Locale;
 public class DailyCalendarActivity extends AppCompatActivity {
     private TextView monthDayText;
     private TextView dayOfWeekTV;
-    private ListView hourListView;
+    private ListView eventDaysListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class DailyCalendarActivity extends AppCompatActivity {
     private void initWidgets() {
         monthDayText = findViewById(R.id.monthDayText);
         dayOfWeekTV = findViewById(R.id.dayOfWeekTV);
-        hourListView = findViewById(R.id.hourListView);
+        eventDaysListView = findViewById(R.id.eventDaysListView);
     }
 
     @Override
@@ -45,24 +45,7 @@ public class DailyCalendarActivity extends AppCompatActivity {
         monthDayText.setText(CalendarUtils.monthDayFromDate(selectedDate));
         String dayOfWeek = selectedDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
         dayOfWeekTV.setText(dayOfWeek);
-        setHourAdapter();
-    }
-
-    private void setHourAdapter() {
-        HourAdapter hourAdapter = new HourAdapter(getApplicationContext(), hourEventList());
-        hourListView.setAdapter(hourAdapter);
-    }
-
-    private ArrayList<HourEvent> hourEventList() {
-        ArrayList<HourEvent> list = new ArrayList<>();
-
-        for(int hour = 0; hour < 24; hour++) {
-            LocalTime time = LocalTime.of(hour, 0);
-            ArrayList<Event> events = Event.eventsForDateAndTime(selectedDate, time);
-            HourEvent hourEvent = new HourEvent(time, events);
-            list.add(hourEvent);
-        }
-        return list;
+        setEventAdapter();
     }
 
     public void previousDayAction(View view) {
@@ -73,6 +56,12 @@ public class DailyCalendarActivity extends AppCompatActivity {
     public void nextDayAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusDays(1);
         setDayView();
+    }
+
+    private void setEventAdapter() {
+        ArrayList<Event> dailyEvents = Event.eventsForDate(selectedDate);
+        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        eventDaysListView.setAdapter(eventAdapter);
     }
 
     public void newEventAction(View view) {

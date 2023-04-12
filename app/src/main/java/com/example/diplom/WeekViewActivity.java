@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import static com.example.diplom.CalendarUtils.daysInMonthArray;
 import static com.example.diplom.CalendarUtils.daysInWeekArray;
 import static com.example.diplom.CalendarUtils.monthYearFromDate;
+import static com.example.diplom.CalendarUtils.selectedDate;
 
 public class WeekViewActivity extends AppCompatActivity implements PlannerAdapter.OnItemListener {
     private TextView monthYearText;
@@ -42,7 +43,7 @@ public class WeekViewActivity extends AppCompatActivity implements PlannerAdapte
     private void setWeekView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
         ArrayList<LocalDate> days = daysInWeekArray(CalendarUtils.selectedDate);
-
+        System.out.println(days.get(0));
         PlannerAdapter plannerAdapter = new PlannerAdapter(this, days, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         plannerRecyclerView.setLayoutManager(layoutManager);
@@ -73,7 +74,7 @@ public class WeekViewActivity extends AppCompatActivity implements PlannerAdapte
     }
 
     private void setEventAdapter() {
-        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
+        ArrayList<Event> dailyEvents = Event.eventsForWeek(selectedDate);
         EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
         eventListView.setAdapter(eventAdapter);
     }
@@ -87,4 +88,5 @@ public class WeekViewActivity extends AppCompatActivity implements PlannerAdapte
         intent = new Intent(this, DailyCalendarActivity.class);
         startActivity(intent);
     }
+
 }

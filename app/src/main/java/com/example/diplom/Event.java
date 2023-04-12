@@ -1,5 +1,7 @@
 package com.example.diplom;
 
+import android.sax.EndElementListener;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -18,14 +20,29 @@ public class Event {
         return events;
     }
 
-    public static ArrayList<Event> eventsForDateAndTime(LocalDate date, LocalTime time) {
+    public static ArrayList<Event> eventsForWeek(LocalDate days) {
         ArrayList<Event> events = new ArrayList<>();
 
         for(Event event : eventsList) {
-            int eventHour = event.time.getHour();
-            int cellHour = time.getHour();
-            if(event.getDate().equals(date) && eventHour == cellHour) {
-                events.add(event);
+            events.add(event);
+        }
+        int lengthControl = events.size();
+        for (int i = 0; i < events.size(); i++) {
+            LocalDate max = events.get(0).getDate();
+            boolean after = true;
+            int temp = 0;
+            Event tempMaxEvent = events.get(0);
+            for (int j = 0; j < lengthControl; j++){
+                if (after == events.get(j).getDate().isAfter(max)) {
+                    max = events.get(j).getDate();
+                    tempMaxEvent = events.get(j);
+                    temp = j;
+                }
+                if (j + 1 == lengthControl) {
+                    events.set(temp, events.get(j));
+                    events.set(j, tempMaxEvent);
+                    lengthControl = lengthControl - 1;
+                }
             }
         }
         return events;
