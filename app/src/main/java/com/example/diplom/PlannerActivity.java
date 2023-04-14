@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 
 import static com.example.diplom.CalendarUtils.daysInMonthArray;
 import static com.example.diplom.CalendarUtils.monthYearFromDate;
+import static com.example.diplom.CalendarUtils.selectedDate;
 
 public class PlannerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PlannerAdapter.OnItemListener{
 
@@ -35,6 +37,8 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
     private Intent intent;
     private TextView monthYearText;
     private RecyclerView plannerRecyclerView;
+    private ListView eventDaysListView;
+    private ArrayList<LocalDate> daysInMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +62,17 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
     private void initWidgets() {
         plannerRecyclerView = findViewById(R.id.plannerRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
+        eventDaysListView = findViewById(R.id.eventMonthListView);
     }
 
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
-        ArrayList<LocalDate> daysInMonth = daysInMonthArray();
-
+        daysInMonth = daysInMonthArray();
         PlannerAdapter plannerAdapter = new PlannerAdapter(this, daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         plannerRecyclerView.setLayoutManager(layoutManager);
         plannerRecyclerView.setAdapter(plannerAdapter);
+        setEventAdapter();
     }
 
     public void previousMonthAction(View view) {
@@ -98,6 +103,12 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.planner, menu);
         return true;
+    }
+
+    private void setEventAdapter() {
+        ArrayList<Event> dailyEvents = Event.eventsForMonth(daysInMonth);
+        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        eventDaysListView.setAdapter(eventAdapter);
     }
 
     @Override

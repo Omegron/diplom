@@ -1,9 +1,13 @@
 package com.example.diplom;
 
+import static com.example.diplom.CalendarUtils.daysInWeekArray;
+
+import android.icu.util.LocaleData;
 import android.sax.EndElementListener;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
 
 public class Event {
@@ -20,12 +24,42 @@ public class Event {
         return events;
     }
 
-    public static ArrayList<Event> eventsForWeek(LocalDate days) {
+    public static ArrayList<Event> eventsForWeek(ArrayList<LocalDate> days) {
         ArrayList<Event> events = new ArrayList<>();
 
         for(Event event : eventsList) {
-            events.add(event);
+            for (LocalDate date : days) {
+                if (event.getDate().equals(date)) {
+                    events.add(event);
+                }
+            }
         }
+        return eventSorting(events);
+    }
+
+    public static ArrayList<Event> eventsForMonth(ArrayList<LocalDate> daysInMonth) {
+        ArrayList<Event> events = new ArrayList<>();
+
+        for(Event event : eventsList) {
+            LocalDate date;
+            for (int i = 0; i < daysInMonth.size(); i++) {
+                if (i < 7) {
+                    if (daysInMonth.get(i).getMonth() == daysInMonth.get(i+7).getMonth()) {
+                        if (event.getDate().equals(daysInMonth.get(i))) {
+                            events.add(event);
+                        }
+                    }
+                } else {
+                    if (event.getDate().equals(daysInMonth.get(i))) {
+                        events.add(event);
+                    }
+                }
+            }
+        }
+        return eventSorting(events);
+    }
+
+    public static ArrayList<Event> eventSorting(ArrayList<Event> events) {
         int lengthControl = events.size();
         for (int i = 0; i < events.size(); i++) {
             LocalDate max = events.get(0).getDate();

@@ -44,6 +44,9 @@ class PlannerAdapter extends RecyclerView.Adapter<PlannerViewHolder> {
 
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
 
+        if(date.equals(LocalDate.now())) {
+            holder.parentView.setBackgroundColor(Color.YELLOW);
+        }
         if(date.equals(CalendarUtils.selectedDate)) {
             holder.parentView.setBackgroundColor(Color.LTGRAY);
         }

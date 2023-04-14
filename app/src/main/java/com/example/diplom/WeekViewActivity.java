@@ -24,7 +24,8 @@ public class WeekViewActivity extends AppCompatActivity implements PlannerAdapte
     private TextView monthYearText;
     private Intent intent;
     private RecyclerView plannerRecyclerView;
-    private ListView eventListView;
+    private ListView eventWeekListView;
+    private ArrayList<LocalDate> days;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +38,12 @@ public class WeekViewActivity extends AppCompatActivity implements PlannerAdapte
     private void initWidgets() {
         plannerRecyclerView = findViewById(R.id.plannerRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
-        eventListView = findViewById(R.id.eventListView);
+        eventWeekListView = findViewById(R.id.eventWeekListView);
     }
 
     private void setWeekView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
-        ArrayList<LocalDate> days = daysInWeekArray(CalendarUtils.selectedDate);
+        days = daysInWeekArray(CalendarUtils.selectedDate);
         System.out.println(days.get(0));
         PlannerAdapter plannerAdapter = new PlannerAdapter(this, days, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
@@ -74,9 +75,9 @@ public class WeekViewActivity extends AppCompatActivity implements PlannerAdapte
     }
 
     private void setEventAdapter() {
-        ArrayList<Event> dailyEvents = Event.eventsForWeek(selectedDate);
+        ArrayList<Event> dailyEvents = Event.eventsForWeek(days);
         EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
-        eventListView.setAdapter(eventAdapter);
+        eventWeekListView.setAdapter(eventAdapter);
     }
 
     public void newEventAction(View view) {
