@@ -98,6 +98,16 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
         startActivity(intent);
     }
 
+    public void dailyAction(View view) {
+        intent = new Intent(this, DailyCalendarActivity.class);
+        startActivity(intent);
+    }
+
+    public void searchAction(View view) {
+        intent = new Intent(this, SearchEventActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

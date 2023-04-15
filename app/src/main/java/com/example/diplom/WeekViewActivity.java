@@ -85,8 +85,18 @@ public class WeekViewActivity extends AppCompatActivity implements PlannerAdapte
         startActivity(intent);
     }
 
+    public void monthlyAction(View view) {
+        intent = new Intent(this, PlannerActivity.class);
+        startActivity(intent);
+    }
+
     public void dailyAction(View view) {
         intent = new Intent(this, DailyCalendarActivity.class);
+        startActivity(intent);
+    }
+
+    public void searchAction(View view) {
+        intent = new Intent(this, SearchEventActivity.class);
         startActivity(intent);
     }
 

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Event {
     public static ArrayList<Event> eventsList = new ArrayList<>();

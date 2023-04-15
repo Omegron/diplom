@@ -21,6 +21,7 @@ public class DailyCalendarActivity extends AppCompatActivity {
     private TextView monthDayText;
     private TextView dayOfWeekTV;
     private ListView eventDaysListView;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,5 +67,20 @@ public class DailyCalendarActivity extends AppCompatActivity {
 
     public void newEventAction(View view) {
         startActivity(new Intent(this, EventEditActivity.class));
+    }
+
+    public void monthlyAction(View view) {
+        intent = new Intent(this, PlannerActivity.class);
+        startActivity(intent);
+    }
+
+    public void weeklyAction(View view) {
+        intent = new Intent(this, WeekViewActivity.class);
+        startActivity(intent);
+    }
+
+    public void searchAction(View view) {
+        intent = new Intent(this, SearchEventActivity.class);
+        startActivity(intent);
     }
 }

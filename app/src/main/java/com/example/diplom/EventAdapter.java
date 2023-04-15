@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.diplom.Models.Notes;
+
 import java.util.List;
 
 public class EventAdapter extends ArrayAdapter<Event> {
@@ -31,4 +33,9 @@ public class EventAdapter extends ArrayAdapter<Event> {
         eventCellTV.setText(eventTitle);
         return convertView;
     }
+
+//    public void filterList (List<Event> filteredList) {
+//        eventsForFilter = filteredList;
+//        notifyDataSetChanged();
+//    }
 }

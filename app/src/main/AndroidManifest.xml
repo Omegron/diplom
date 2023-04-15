@@ -33,6 +33,7 @@
         <activity android:name=".WeekViewActivity"/>
         <activity android:name=".DailyCalendarActivity"/>
         <activity android:name=".EventEditActivity"/>
+        <activity android:name=".SearchEventActivity"/>
         <activity
             android:name=".DiaryActivity"
             android:exported="false"

@@ -101,7 +101,6 @@ public class NotesActivity extends AppCompatActivity implements NavigationView.O
             }
         }
         notesListAdapter.filterList(filteredList);
-
     }
 
     @Override

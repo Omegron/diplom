@@ -1,5 +1,7 @@
 package com.example.diplom;
 
+import static com.example.diplom.R.id.drawer_layout;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;

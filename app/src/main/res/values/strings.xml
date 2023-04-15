@@ -25,5 +25,6 @@
 
     <string name="back"><![CDATA[<-]]></string>
     <string name="forward"><![CDATA[->]]></string>
+    <string name="add_new_note">Add new note</string>
 
 </resources>
