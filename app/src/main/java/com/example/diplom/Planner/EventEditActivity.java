@@ -1,4 +1,4 @@
-package com.example.diplom;
+package com.example.diplom.Planner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.diplom.CalendarUtils;
+import com.example.diplom.R;
 
 import java.time.LocalTime;
 

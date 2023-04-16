@@ -1,4 +1,4 @@
-package com.example.diplom;
+package com.example.diplom.Notes;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,9 +14,11 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.diplom.Adapter.NotesListAdapter;
-import com.example.diplom.DataBase.RoomDB;
-import com.example.diplom.Models.Notes;
+import com.example.diplom.Articles.ArticlesActivity;
+import com.example.diplom.Diary.DiaryActivity;
+import com.example.diplom.Planner.PlannerActivity;
+import com.example.diplom.R;
+import com.example.diplom.Settings.SettingsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -31,7 +33,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class NotesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PopupMenu.OnMenuItemClickListener{
 

@@ -1,15 +1,8 @@
-package com.example.diplom;
-
-import static com.example.diplom.CalendarUtils.daysInWeekArray;
-
-import android.icu.util.LocaleData;
-import android.sax.EndElementListener;
+package com.example.diplom.Planner;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Event {
     public static ArrayList<Event> eventsList = new ArrayList<>();
@@ -64,11 +57,10 @@ public class Event {
         int lengthControl = events.size();
         for (int i = 0; i < events.size(); i++) {
             LocalDate max = events.get(0).getDate();
-            boolean after = true;
             int temp = 0;
             Event tempMaxEvent = events.get(0);
             for (int j = 0; j < lengthControl; j++){
-                if (after == events.get(j).getDate().isAfter(max)) {
+                if (events.get(j).getDate().isAfter(max)) {
                     max = events.get(j).getDate();
                     tempMaxEvent = events.get(j);
                     temp = j;

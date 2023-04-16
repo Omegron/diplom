@@ -25,6 +25,24 @@
 
     <string name="back"><![CDATA[<-]]></string>
     <string name="forward"><![CDATA[->]]></string>
-    <string name="add_new_note">Add new note</string>
+    <string name="add_new_note">Додати нову замітку</string>
+    <string name="add_new_event">Додати нову справу</string>
+    <string name="search">Пошук</string>
+    <string name="daily">День</string>
+    <string name="weekly">Неділя</string>
+    <string name="monthly">Місяць</string>
+    <string name="month_and_year">Місяць та рік</string>
+    <string name="emotions">Емоції</string>
+    <string name="diary_entry">Відмітка</string>
+    <string name="rating">Рейтинг</string>
+
+    <string name="day">День</string>
+    <string name="monday">Пон</string>
+    <string name="tuesday">Вівт</string>
+    <string name="wednesday">Сер</string>
+    <string name="thursday">Четв</string>
+    <string name="friday">П\'ятн</string>
+    <string name="saturday">Суб</string>
+    <string name="sunday">Нед</string>
 
 </resources>

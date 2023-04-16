@@ -1,6 +1,5 @@
-package com.example.diplom;
+package com.example.diplom.Planner;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,15 +9,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static com.example.diplom.CalendarUtils.daysInMonthArray;
 import static com.example.diplom.CalendarUtils.daysInWeekArray;
 import static com.example.diplom.CalendarUtils.monthYearFromDate;
-import static com.example.diplom.CalendarUtils.selectedDate;
+
+import com.example.diplom.CalendarUtils;
+import com.example.diplom.R;
 
 public class WeekViewActivity extends AppCompatActivity implements PlannerAdapter.OnItemListener {
     private TextView monthYearText;

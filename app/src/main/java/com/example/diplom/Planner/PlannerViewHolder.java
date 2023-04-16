@@ -1,10 +1,12 @@
-package com.example.diplom;
+package com.example.diplom.Planner;
 
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.diplom.R;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

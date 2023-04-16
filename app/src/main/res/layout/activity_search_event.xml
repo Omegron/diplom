@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".DailyCalendarActivity"
+    tools:context=".Planner.DailyCalendarActivity"
     tools:showIn="@layout/app_bar_search_event">
 
     <androidx.appcompat.widget.SearchView

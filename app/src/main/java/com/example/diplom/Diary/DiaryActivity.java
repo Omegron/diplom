@@ -1,49 +1,52 @@
-package com.example.diplom;
+package com.example.diplom.Diary;
+
+import static com.example.diplom.CalendarUtils.daysInMonthArray;
+import static com.example.diplom.CalendarUtils.monthYearFromDate;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.diplom.Articles.ArticlesActivity;
+import com.example.diplom.CalendarUtils;
+import com.example.diplom.Notes.NotesActivity;
+import com.example.diplom.Planner.DailyCalendarActivity;
+import com.example.diplom.Planner.PlannerActivity;
+import com.example.diplom.Planner.SearchEventActivity;
+import com.example.diplom.Planner.WeekViewActivity;
+import com.example.diplom.R;
+import com.example.diplom.Settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static com.example.diplom.CalendarUtils.daysInMonthArray;
-import static com.example.diplom.CalendarUtils.monthYearFromDate;
-import static com.example.diplom.CalendarUtils.selectedDate;
-
-public class PlannerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PlannerAdapter.OnItemListener{
+public class DiaryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DiaryAdapter.OnItemListener{
 
     private DrawerLayout drawer;
     private Intent intent;
     private TextView monthYearText;
-    private RecyclerView plannerRecyclerView;
-    private ListView eventDaysListView;
+    private RecyclerView diaryRecyclerView;
     private ArrayList<LocalDate> daysInMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_planner);
+        setContentView(R.layout.activity_diary);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -60,19 +63,17 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
     }
 
     private void initWidgets() {
-        plannerRecyclerView = findViewById(R.id.plannerRecyclerView);
+        diaryRecyclerView = findViewById(R.id.diaryRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
-        eventDaysListView = findViewById(R.id.eventMonthListView);
     }
 
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
         daysInMonth = daysInMonthArray();
-        PlannerAdapter plannerAdapter = new PlannerAdapter(this, daysInMonth, this);
+        DiaryAdapter diaryAdapter = new DiaryAdapter(this, daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
-        plannerRecyclerView.setLayoutManager(layoutManager);
-        plannerRecyclerView.setAdapter(plannerAdapter);
-        setEventAdapter();
+        diaryRecyclerView.setLayoutManager(layoutManager);
+        diaryRecyclerView.setAdapter(diaryAdapter);
     }
 
     public void previousMonthAction(View view) {
@@ -81,54 +82,49 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
     }
 
     public void nextMonthAction(View view) {
-        CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
-        setMonthView();
+        if (!CalendarUtils.selectedDate.plusMonths(1).isAfter(LocalDate.now())) {
+            CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
+            setMonthView();
+        }
     }
 
     @Override
     public void onItemClick(int position, LocalDate date) {
-        if(date != null && date.getMonth().equals(CalendarUtils.selectedDate.getMonth())) {
+        if(date != null && date.getMonth().equals(CalendarUtils.selectedDate.getMonth()) && !date.isAfter(LocalDate.now())) {
             CalendarUtils.selectedDate = date;
             setMonthView();
         }
     }
 
-    public void weeklyAction(View view) {
-        intent = new Intent(this, WeekViewActivity.class);
-        startActivity(intent);
+    public void emotionsAction() {
+
     }
 
-    public void dailyAction(View view) {
-        intent = new Intent(this, DailyCalendarActivity.class);
-        startActivity(intent);
+    public void ratingAction() {
+
     }
 
-    public void searchAction(View view) {
-        intent = new Intent(this, SearchEventActivity.class);
+    public void diaryEntryAction(View view) {
+        intent = new Intent(this, DiaryEntryActivity.class);
         startActivity(intent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.planner, menu);
+        getMenuInflater().inflate(R.menu.diary, menu);
         return true;
-    }
-
-    private void setEventAdapter() {
-        ArrayList<Event> dailyEvents = Event.eventsForMonth(daysInMonth);
-        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
-        eventDaysListView.setAdapter(eventAdapter);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
+        Intent intent;
         switch (id) {
             case R.id.articles: intent = new Intent(this, ArticlesActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.diary: intent = new Intent(this, DiaryActivity.class);
+            case R.id.planner: intent = new Intent(this, PlannerActivity.class);
                 startActivity(intent);
                 break;
             case R.id.notes: intent = new Intent(this, NotesActivity.class);

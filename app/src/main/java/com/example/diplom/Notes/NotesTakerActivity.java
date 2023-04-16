@@ -1,4 +1,4 @@
-package com.example.diplom;
+package com.example.diplom.Notes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.diplom.Models.Notes;
+import com.example.diplom.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

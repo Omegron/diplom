@@ -1,4 +1,4 @@
-package com.example.diplom.Adapter;
+package com.example.diplom.Notes;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.diplom.Models.Notes;
-import com.example.diplom.NotesClickListener;
 import com.example.diplom.R;
 
 import java.util.List;

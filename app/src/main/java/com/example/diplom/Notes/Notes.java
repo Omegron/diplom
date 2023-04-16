@@ -1,4 +1,4 @@
-package com.example.diplom.Models;
+package com.example.diplom.Notes;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

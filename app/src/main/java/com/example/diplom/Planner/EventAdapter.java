@@ -1,4 +1,4 @@
-package com.example.diplom;
+package com.example.diplom.Planner;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.diplom.Models.Notes;
+import com.example.diplom.CalendarUtils;
+import com.example.diplom.R;
 
 import java.util.List;
 

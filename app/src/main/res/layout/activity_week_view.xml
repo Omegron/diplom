@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".WeekViewActivity"
+    tools:context=".Planner.WeekViewActivity"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_week_view">
 
@@ -21,11 +21,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:background="@null"
             android:onClick="monthlyAction"
-            android:text="Monthly"
+            android:text="@string/monthly"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -39,7 +38,7 @@
             android:layout_weight="1."
             android:background="@null"
             android:onClick="searchAction"
-            android:text="Search"
+            android:text="@string/search"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -48,11 +47,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:background="@null"
             android:onClick="dailyAction"
-            android:text="Daily"
+            android:text="@string/daily"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -64,7 +62,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp">
 
         <Button
             android:layout_width="0dp"
@@ -82,7 +80,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:text="Month and year"
+            android:text="@string/month_and_year"
             android:textSize="20sp"
             android:textAlignment="center"
             android:textColor="@color/black"/>
@@ -109,64 +107,64 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="MON"
-            android:textColor="@color/teal_200"
+            android:text="@string/monday"
             android:textAlignment="center"
-            android:textSize="16sp"/>
+            android:textColor="@color/teal_200"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TUE"
-            android:textColor="@color/teal_200"
+            android:text="@string/tuesday"
             android:textAlignment="center"
-            android:textSize="16sp"/>
+            android:textColor="@color/teal_200"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="WED"
-            android:textColor="@color/teal_200"
+            android:text="@string/wednesday"
             android:textAlignment="center"
-            android:textSize="16sp"/>
+            android:textColor="@color/teal_200"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="THUR"
-            android:textColor="@color/teal_200"
+            android:text="@string/thursday"
             android:textAlignment="center"
-            android:textSize="16sp"/>
+            android:textColor="@color/teal_200"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="FRI"
-            android:textColor="@color/teal_200"
+            android:text="@string/friday"
             android:textAlignment="center"
-            android:textSize="16sp"/>
+            android:textColor="@color/teal_200"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SAT"
-            android:textColor="@color/teal_200"
+            android:text="@string/saturday"
             android:textAlignment="center"
-            android:textSize="16sp"/>
+            android:textColor="@color/teal_200"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SUN"
-            android:textColor="@color/teal_200"
+            android:text="@string/sunday"
             android:textAlignment="center"
-            android:textSize="16sp"/>
+            android:textColor="@color/teal_200"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -180,7 +178,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Event"
+        android:text="@string/add_new_event"
         android:textColor="@color/black"
         android:background="@null"
         android:textStyle="bold"

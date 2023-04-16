@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".PlannerActivity"
+    tools:context=".Planner.PlannerActivity"
     tools:showIn="@layout/app_bar_planner">
 
     <LinearLayout
@@ -20,11 +20,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:background="@null"
             android:onClick="weeklyAction"
-            android:text="Weekly"
+            android:text="@string/weekly"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -38,7 +37,7 @@
             android:layout_weight="1."
             android:background="@null"
             android:onClick="searchAction"
-            android:text="Search"
+            android:text="@string/search"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -47,11 +46,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:background="@null"
             android:onClick="dailyAction"
-            android:text="Daily"
+            android:text="@string/daily"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -82,7 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Month and year"
+            android:text="@string/month_and_year"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -109,7 +107,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="MON"
+            android:text="@string/monday"
             android:textAlignment="center"
             android:textColor="@color/teal_200"
             android:textSize="16sp" />
@@ -118,7 +116,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TUE"
+            android:text="@string/tuesday"
             android:textAlignment="center"
             android:textColor="@color/teal_200"
             android:textSize="16sp" />
@@ -127,7 +125,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="WED"
+            android:text="@string/wednesday"
             android:textAlignment="center"
             android:textColor="@color/teal_200"
             android:textSize="16sp" />
@@ -136,7 +134,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="THUR"
+            android:text="@string/thursday"
             android:textAlignment="center"
             android:textColor="@color/teal_200"
             android:textSize="16sp" />
@@ -145,7 +143,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="FRI"
+            android:text="@string/friday"
             android:textAlignment="center"
             android:textColor="@color/teal_200"
             android:textSize="16sp" />
@@ -154,7 +152,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SAT"
+            android:text="@string/saturday"
             android:textAlignment="center"
             android:textColor="@color/teal_200"
             android:textSize="16sp" />
@@ -163,7 +161,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SUN"
+            android:text="@string/sunday"
             android:textAlignment="center"
             android:textColor="@color/teal_200"
             android:textSize="16sp" />

@@ -1,4 +1,4 @@
-package com.example.diplom;
+package com.example.diplom.Articles;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.diplom.R;
 
 public class ArticleTextActivity extends AppCompatActivity {
     private TextView text_content;

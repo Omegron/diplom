@@ -1,8 +1,8 @@
-package com.example.diplom;
+package com.example.diplom.Notes;
 
 import androidx.cardview.widget.CardView;
 
-import com.example.diplom.Models.Notes;
+import com.example.diplom.Notes.Notes;
 
 public interface NotesClickListener {
 

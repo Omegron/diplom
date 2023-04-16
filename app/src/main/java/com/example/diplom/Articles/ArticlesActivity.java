@@ -1,13 +1,22 @@
-package com.example.diplom;
+package com.example.diplom.Articles;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.diplom.Diary.DiaryActivity;
+import com.example.diplom.Notes.NotesActivity;
+import com.example.diplom.Planner.PlannerActivity;
+import com.example.diplom.R;
+import com.example.diplom.Settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -15,15 +24,22 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SettingsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class ArticlesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private Toolbar toolbar;
     private DrawerLayout drawer;
+    private ListView list;
+    private String[] array;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_articles);
+        list = findViewById(R.id.listView);
+        array = getResources().getStringArray(R.array.articles_names_array);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, array);
+        list.setAdapter(adapter);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -33,16 +49,20 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ArticlesActivity.this, ArticleTextActivity.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.settings, menu);
+        getMenuInflater().inflate(R.menu.articles, menu);
         return true;
     }
 
@@ -51,16 +71,16 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         int id = menuItem.getItemId();
         Intent intent;
         switch (id) {
-            case R.id.articles: intent = new Intent(this, ArticlesActivity.class);
+            case R.id.diary: intent = new Intent(this, DiaryActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.diary: intent = new Intent(this, DiaryActivity.class);
+            case R.id.planner: intent = new Intent(this, PlannerActivity.class);
                 startActivity(intent);
                 break;
             case R.id.notes: intent = new Intent(this, NotesActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.planner: intent = new Intent(this, PlannerActivity.class);
+            case R.id.settings: intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
         }
