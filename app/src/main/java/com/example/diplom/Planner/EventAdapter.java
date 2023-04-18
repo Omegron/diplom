@@ -34,9 +34,4 @@ public class EventAdapter extends ArrayAdapter<Event> {
         eventCellTV.setText(eventTitle);
         return convertView;
     }
-
-//    public void filterList (List<Event> filteredList) {
-//        eventsForFilter = filteredList;
-//        notifyDataSetChanged();
-//    }
 }

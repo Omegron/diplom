@@ -17,10 +17,10 @@ import java.util.List;
 
 public class NotesListAdapter extends RecyclerView.Adapter<NotesViewHolder>{
 
-    Context context;
-    List<Notes> list;
+    private Context context;
+    private List<Notes> list;
 
-    NotesClickListener listener;
+    private NotesClickListener listener;
 
     public NotesListAdapter(Context context, List<Notes> list, NotesClickListener listener) {
         this.context = context;

@@ -36,21 +36,18 @@ import java.util.List;
 
 public class NotesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PopupMenu.OnMenuItemClickListener{
 
-    private Toolbar toolbar;
     private DrawerLayout drawer;
-    RecyclerView recyclerView;
-    FloatingActionButton fab_add;
-    NotesListAdapter notesListAdapter;
-    RoomDB database;
-    List<Notes> notes = new ArrayList<>();
-    SearchView searchNote;
-    Notes selectedNote;
+    private RecyclerView recyclerView;
+    private NotesListAdapter notesListAdapter;
+    private NotesDB database;
+    private List<Notes> notes = new ArrayList<>();
+    private Notes selectedNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -61,12 +58,12 @@ public class NotesActivity extends AppCompatActivity implements NavigationView.O
         navigationView.setNavigationItemSelectedListener(this);
 
         recyclerView = findViewById(R.id.recycler_home);
-        fab_add = findViewById(R.id.fab_add);
+        FloatingActionButton fab_add = findViewById(R.id.fab_add);
 
-        searchNote = findViewById(R.id.searchNote);
+        SearchView searchNote = findViewById(R.id.searchNote);
 
-        database = RoomDB.getInstance(this);
-        notes = database.mainDAO().getAll();
+        database = NotesDB.getInstance(this);
+        notes = database.notesDAO().getAll();
 
         updateRecycler(notes);
 
@@ -111,9 +108,9 @@ public class NotesActivity extends AppCompatActivity implements NavigationView.O
             if (requestCode == 101) {
                 if (resultCode == Activity.RESULT_OK) {
                     Notes new_notes = (Notes) data.getSerializableExtra("note");
-                    database.mainDAO().insert(new_notes);
+                    database.notesDAO().insert(new_notes);
                     notes.clear();
-                    notes.addAll(database.mainDAO().getAll());
+                    notes.addAll(database.notesDAO().getAll());
                     notesListAdapter.notifyDataSetChanged();
                 }
 
@@ -121,9 +118,9 @@ public class NotesActivity extends AppCompatActivity implements NavigationView.O
         if (requestCode == 102) {
             if (resultCode == Activity.RESULT_OK) {
                 Notes new_notes = (Notes) data.getSerializableExtra("note");
-                database.mainDAO().update(new_notes.getID(), new_notes.getTitle(), new_notes.getNotes());
+                database.notesDAO().update(new_notes.getID(), new_notes.getTitle(), new_notes.getNotes());
                 notes.clear();
-                notes.addAll(database.mainDAO().getAll());
+                notes.addAll(database.notesDAO().getAll());
                 notesListAdapter.notifyDataSetChanged();
             }
         }
@@ -164,19 +161,19 @@ public class NotesActivity extends AppCompatActivity implements NavigationView.O
         switch (item.getItemId()) {
             case R.id.pin:
                 if (selectedNote.isPinned()) {
-                    database.mainDAO().pin(selectedNote.getID(), false);
+                    database.notesDAO().pin(selectedNote.getID(), false);
                     Toast.makeText(NotesActivity.this, "Unpinned", Toast.LENGTH_SHORT).show();
                 } else {
-                    database.mainDAO().pin(selectedNote.getID(), true);
+                    database.notesDAO().pin(selectedNote.getID(), true);
                     Toast.makeText(NotesActivity.this, "Pinned", Toast.LENGTH_SHORT).show();
                 }
                 notes.clear();
-                notes.addAll(database.mainDAO().getAll());
+                notes.addAll(database.notesDAO().getAll());
                 notesListAdapter.notifyDataSetChanged();
                 return true;
 
             case R.id.delete:
-                database.mainDAO().delete(selectedNote);
+                database.notesDAO().delete(selectedNote);
                 notes.remove(selectedNote);
                 notesListAdapter.notifyDataSetChanged();
                 Toast.makeText(NotesActivity.this, "Note removed", Toast.LENGTH_SHORT).show();

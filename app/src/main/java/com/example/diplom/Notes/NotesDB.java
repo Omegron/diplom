@@ -6,14 +6,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(entities = Notes.class, version = 1, exportSchema = false)
-public abstract class RoomDB extends RoomDatabase {
+public abstract class NotesDB extends RoomDatabase {
 
-    private static RoomDB database;
-    private static String DATABASE_NAME = "NoteApp";
+    private static NotesDB database;
+    private static String DATABASE_NAME = "NoteAct";
 
-    public synchronized static RoomDB getInstance(Context context) {
+    public synchronized static NotesDB getInstance(Context context) {
         if (database == null) {
-            database = Room.databaseBuilder(context.getApplicationContext(), RoomDB.class, DATABASE_NAME)
+            database = Room.databaseBuilder(context.getApplicationContext(), NotesDB.class, DATABASE_NAME)
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .build();
@@ -21,6 +21,6 @@ public abstract class RoomDB extends RoomDatabase {
         return database;
     }
 
-    public abstract MainDAO mainDAO();
+    public abstract NotesDAO notesDAO();
 
 }

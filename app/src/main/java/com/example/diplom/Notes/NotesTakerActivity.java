@@ -17,10 +17,10 @@ import java.util.Date;
 
 public class NotesTakerActivity extends AppCompatActivity {
 
-    EditText editTextTitle, editTextNotes;
-    ImageView noteSave;
-    Notes notes;
-    boolean isOldNote = false;
+    private EditText editTextTitle, editTextNotes;
+    private ImageView noteSave;
+    private Notes notes;
+    private boolean isOldNote = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

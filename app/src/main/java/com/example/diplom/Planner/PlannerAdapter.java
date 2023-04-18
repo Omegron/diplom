@@ -56,7 +56,6 @@ class PlannerAdapter extends RecyclerView.Adapter<PlannerViewHolder> {
 
         if(date.getMonth().equals(CalendarUtils.selectedDate.getMonth())) {
             holder.dayOfMonth.setTextColor(Color.BLACK);
-            System.out.println(activity.getLocalClassName());
         } else if (Objects.equals(activity.getLocalClassName(), "PlannerActivity")) {
             holder.dayOfMonth.setTextColor(Color.WHITE);
         } else {

@@ -10,7 +10,7 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface MainDAO {
+public interface NotesDAO {
 
     @Insert(onConflict = REPLACE)
     void insert (Notes notes);

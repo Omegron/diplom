@@ -75,22 +75,22 @@ public class Event {
         return events;
     }
 
-    private String name;
+    private String event;
     private LocalDate date;
     private LocalTime time;
 
-    public Event(String name, LocalDate date, LocalTime time) {
-        this.name = name;
+    public Event(String event, LocalDate date, LocalTime time) {
+        this.event = event;
         this.date = date;
         this.time = time;
     }
 
     public String getName() {
-        return name;
+        return event;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.event = name;
     }
 
     public LocalDate getDate() {
