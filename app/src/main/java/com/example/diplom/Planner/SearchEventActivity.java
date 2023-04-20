@@ -1,27 +1,34 @@
 package com.example.diplom.Planner;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-
-import android.os.Bundle;
-import android.widget.ListView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.diplom.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchEventActivity extends AppCompatActivity{
 
-    private ListView eventSearchListView;
-    private SearchView searchEvent;
-    private EventAdapter eventAdapter;
+    private RecyclerView eventSearchListView;
+    private EventsListAdapter eventsListAdapter;
+    private EventsClickListener eventsClickListener;
+    private List<Events> events = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_event);
-        initWidgets();
-
+        eventSearchListView = findViewById(R.id.eventSearchListView);
+        SearchView searchEvent = findViewById(R.id.searchEvent);
+        EventsDB database = EventsDB.getInstance(this);
+        events = database.eventsDAO().getAll();
+        updateRecycler(events);
         searchEvent.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -34,39 +41,30 @@ public class SearchEventActivity extends AppCompatActivity{
                 return false;
             }
         });
+        updateRecycler(Events.eventsSorting(events));
     }
 
     private void filter(String newText) {
-        ArrayList<Event> filteredList = new ArrayList<>();
-        for (Event event : Event.eventsList) {
-            if (event.getName().toLowerCase().contains(newText.toLowerCase())) {
+        List<Events> filteredList = new ArrayList<>();
+        for (Events event : events) {
+            if (event.getTask().toLowerCase().contains(newText.toLowerCase())) {
                 filteredList.add(event);
             }
         }
-        eventAdapter = new EventAdapter(getApplicationContext(), filteredList);
-        eventSearchListView.setAdapter(eventAdapter);
+        eventsListAdapter.filterList(filteredList);
     }
 
-    private void initWidgets() {
-        eventSearchListView = findViewById(R.id.eventSearchListView);
-        searchEvent = findViewById(R.id.searchEvent);
-    }
-
-    private void setSearchView() {
-        setEventAdapter();
+    private void updateRecycler(List<Events> events) {
+        eventSearchListView.setHasFixedSize(true);
+        eventSearchListView.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL));
+        eventsListAdapter = new EventsListAdapter(SearchEventActivity.this, events, eventsClickListener);
+        eventSearchListView.setAdapter(eventsListAdapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setSearchView();
-    }
-
-    private void setEventAdapter() {
-        ArrayList<Event> events = Event.eventsList;
-        events = Event.eventSorting(events);
-        eventAdapter = new EventAdapter(getApplicationContext(), events);
-        eventSearchListView.setAdapter(eventAdapter);
+        updateRecycler(Events.eventsSorting(events));
     }
 
 }

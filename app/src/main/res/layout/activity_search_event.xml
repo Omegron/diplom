@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Planner.DailyCalendarActivity"
+    tools:context=".Planner.SearchEventActivity"
     tools:showIn="@layout/app_bar_search_event">
 
     <androidx.appcompat.widget.SearchView
@@ -22,10 +22,11 @@
         app:iconifiedByDefault="false"
         app:queryHint="Пошук: " />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventSearchListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5" />
+        android:layout_weight="5">
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

@@ -18,8 +18,11 @@ public interface EventsDAO {
     @Query("SELECT * FROM events ORDER BY id DESC")
     List<Events> getAll();
 
-    @Query("UPDATE events SET event = :event WHERE ID = :id")
-    void update (int id, String event);
+    @Query("SELECT * FROM events WHERE date = :date")
+    List<Events> getDay(String date);
+
+    @Query("UPDATE events SET task = :task WHERE ID = :id")
+    void update (int id, String task);
 
     @Delete
     void delete (Events events);

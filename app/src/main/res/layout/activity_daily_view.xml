@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Planner.DailyCalendarActivity"
+    tools:context=".Planner.DailyViewActivity"
     tools:showIn="@layout/app_bar_daily_calendar">
 
     <LinearLayout
@@ -113,14 +113,15 @@
         android:textColor="@color/black"
         android:background="@null"
         android:textStyle="bold"
-        android:onClick="newEventAction"
+        android:id="@+id/newEvent"
         android:layout_gravity="center"
         android:textSize="20sp"/>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventDaysListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5" />
+        android:layout_weight="5">
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

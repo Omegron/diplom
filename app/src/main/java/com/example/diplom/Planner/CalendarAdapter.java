@@ -16,12 +16,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
-class PlannerAdapter extends RecyclerView.Adapter<PlannerViewHolder> {
+class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     private final Activity activity;
     private final ArrayList<LocalDate> days;
     private final OnItemListener onItemListener;
 
-    public PlannerAdapter(Activity activity, ArrayList<LocalDate> days, OnItemListener onItemListener) {
+    public CalendarAdapter(Activity activity, ArrayList<LocalDate> days, OnItemListener onItemListener) {
         this.activity = activity;
         this.days = days;
         this.onItemListener = onItemListener;
@@ -29,7 +29,7 @@ class PlannerAdapter extends RecyclerView.Adapter<PlannerViewHolder> {
 
     @NonNull
     @Override
-    public PlannerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
@@ -38,11 +38,11 @@ class PlannerAdapter extends RecyclerView.Adapter<PlannerViewHolder> {
         } else { // week view
             layoutParams.height = (int) parent.getHeight();
         }
-        return new PlannerViewHolder(view, onItemListener, days);
+        return new CalendarViewHolder(view, onItemListener, days);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlannerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         final LocalDate date = days.get(position);
 
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));

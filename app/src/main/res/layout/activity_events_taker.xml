@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Planner.EventEditActivity"
-    tools:showIn="@layout/app_bar_event_edit">
+    tools:context=".Planner.EventsTakerActivity"
+    tools:showIn="@layout/app_bar_events_taker">
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
         android:textColor="@color/black"/>
 
     <EditText
-        android:id="@+id/eventNameET"
+        android:id="@+id/eventTaskEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -29,7 +29,7 @@
         android:inputType="text"/>
 
     <TextView
-        android:id="@+id/eventDateTV"
+        android:id="@+id/eventDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -47,7 +47,7 @@
         android:textColor="@color/black"
         android:background="@null"
         android:textStyle="bold"
-        android:onClick="saveEventAction"
+        android:id="@+id/eventSave"
         android:layout_gravity="center"
         android:textSize="20sp"/>
 

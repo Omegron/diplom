@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,10 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.diplom.Articles.ArticlesActivity;
 import com.example.diplom.CalendarUtils;
 import com.example.diplom.Notes.NotesActivity;
-import com.example.diplom.Planner.DailyCalendarActivity;
 import com.example.diplom.Planner.PlannerActivity;
-import com.example.diplom.Planner.SearchEventActivity;
-import com.example.diplom.Planner.WeekViewActivity;
 import com.example.diplom.R;
 import com.example.diplom.Settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;

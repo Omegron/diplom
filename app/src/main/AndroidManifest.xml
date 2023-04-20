@@ -30,9 +30,9 @@
             android:exported="false"
             android:label="@string/title_activity_planner"
             android:theme="@style/Theme.Diplom.NoActionBar" />
-        <activity android:name=".Planner.WeekViewActivity"/>
-        <activity android:name=".Planner.DailyCalendarActivity"/>
-        <activity android:name=".Planner.EventEditActivity"/>
+        <activity android:name=".Planner.WeeklyViewActivity"/>
+        <activity android:name=".Planner.DailyViewActivity"/>
+        <activity android:name=".Planner.EventsTakerActivity"/>
         <activity android:name=".Planner.SearchEventActivity"/>
         <activity
             android:name=".Diary.DiaryActivity"

@@ -10,12 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diplom.CalendarUtils;
-import com.example.diplom.Planner.PlannerViewHolder;
 import com.example.diplom.R;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class DiaryAdapter extends RecyclerView.Adapter<DiaryViewHolder> {
 
