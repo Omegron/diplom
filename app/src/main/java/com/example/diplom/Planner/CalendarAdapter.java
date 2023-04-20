@@ -1,10 +1,12 @@
 package com.example.diplom.Planner;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +16,16 @@ import com.example.diplom.R;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     private final Activity activity;
     private final ArrayList<LocalDate> days;
     private final OnItemListener onItemListener;
+    private List<Events> events;
+    private EventsDB database;
+    private ImageView stateImage;
 
     public CalendarAdapter(Activity activity, ArrayList<LocalDate> days, OnItemListener onItemListener) {
         this.activity = activity;
@@ -44,6 +50,11 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         final LocalDate date = days.get(position);
+//        String dateForCompare = CalendarUtils.formattedDate(date);
+//        database = EventsDB.getInstance(null);
+//        events = database.eventsDAO().getDay(dateForCompare);
+//
+//        holder.eventState
 
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
 
@@ -61,6 +72,7 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         } else {
             holder.dayOfMonth.setTextColor(Color.LTGRAY);
         }
+
     }
 
     @Override

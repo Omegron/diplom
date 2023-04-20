@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,8 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
     private List<Events> eventsTemp = new ArrayList<>();
     private EventsDB database;
     private Events selectedEvent;
+    private CheckBox eventCheckBox;
+    private ImageView eventStateImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,8 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
         monthYearText = findViewById(R.id.monthYearTV);
         CalendarUtils.selectedDate = LocalDate.now();
 
+
+
         Bundle arguments = getIntent().getExtras();
         String name = arguments.get("month").toString();
         if (!name.equals("First jump")) {
@@ -85,13 +91,53 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
             if (month1.equals(month2)) {
                 eventsTemp = database.eventsDAO().getDay(CalendarUtils.formattedDate(daysInMonth.get(i)));
             }
+            int stateCount = 0;
             for (Events event : eventsTemp) {
                 events.add(event);
+
             }
         }
         updateRecycler(events);
 
         setMonthView();
+//        View view = getLayoutInflater().inflate(R.layout.events_list, null);
+//        eventCheckBox = view.findViewById(R.id.eventCheckBox);
+//        eventCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                if (isChecked) {
+//                    Toast.makeText(PlannerActivity.this, eventCheckBox.getText(), Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//        });
+
+//        View view = getLayoutInflater().inflate(R.layout.calendar_cell, null);
+//        eventStateImage = view.findViewById(R.id.eventState0);
+//        eventStateImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                for (int i = 0; i < daysInMonth.size(); i++) {
+//                    Month month1 = daysInMonth.get(i).getMonth();
+//                    Month month2 = daysInMonth.get(10).getMonth();
+//                    if (month1.equals(month2)) {
+//                        eventsTemp = database.eventsDAO().getDay(CalendarUtils.formattedDate(daysInMonth.get(i)));
+//                    }
+//                    int stateCount = 0;
+//                    for (Events event : eventsTemp) {
+//                        if (event.getState()) {
+//                            stateCount++;
+//                        }
+//
+//                    }
+//                    if (eventsTemp.size() == stateCount - 1) {
+//                        eventStateImage.setImageDrawable(getDrawable(R.drawable.state_2));
+//                    } else {
+//                        eventStateImage.setImageDrawable(getDrawable(R.drawable.state_1));
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -101,7 +147,7 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
         if (requestCode == 102) {
             if (resultCode == Activity.RESULT_OK) {
                 Events new_events = (Events) data.getSerializableExtra("event");
-                database.eventsDAO().update(new_events.getID(), new_events.getTask());
+                database.eventsDAO().updateTask(new_events.getID(), new_events.getTask());
                 events.clear();
                 events.addAll(database.eventsDAO().getAll());
                 eventsListAdapter.notifyDataSetChanged();
@@ -118,16 +164,23 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
 
     private final EventsClickListener eventsClickListener = new EventsClickListener() {
         @Override
-        public void onClick(Events events) {
+        public void onClick(Events event) {
             Intent intent = new Intent(PlannerActivity.this, EventsTakerActivity.class);
-            intent.putExtra("old_event", events);
+            intent.putExtra("old_event", event);
             startActivityForResult(intent, 102);
         }
 
         @Override
-        public void onLongClick(Events events, CardView cardView) {
-            selectedEvent = events;
+        public void onLongClick(Events event, CardView cardView) {
+            selectedEvent = event;
             showPopup (cardView);
+        }
+
+        @Override
+        public void onCheckboxClick(Events event, CheckBox checkBox) {
+            event.setState(checkBox.isChecked());
+            database.eventsDAO().updateState(event.getID(), event.getState());
+            eventsListAdapter.notifyDataSetChanged();
         }
     };
 
@@ -224,6 +277,22 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
             setMonthView();
         }
     }
+
+
+//    CompoundButton.OnCheckedChangeListener
+//    holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//        @Override
+//        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//            Toast.makeText(PlannerActivity.this, checkBox.getText() + " check change to " + String.valueOf(isChecked), Toast.LENGTH_SHORT).show();
+//        }
+//    });
+
+//    public void onCheckboxClicked(View view) {
+//
+//        boolean checked = ((CheckBox) view).isChecked();
+//        Toast.makeText(this, "Event task = " + ((CheckBox) view).toString(), Toast.LENGTH_SHORT).show();
+//        //event.setState(checked);
+//    }
 
     public void weeklyAction(View view) {
         intent = new Intent(this, WeeklyViewActivity.class);

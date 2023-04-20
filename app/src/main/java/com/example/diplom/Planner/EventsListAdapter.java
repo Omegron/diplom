@@ -4,7 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -41,6 +44,9 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsViewHolder> {
         holder.eventDate.setText(list.get(position).getDate());
         holder.eventDate.setSelected(true);
 
+        holder.eventCheckBox.setChecked(list.get(position).getState());
+        holder.eventCheckBox.setSelected(true);
+
         holder.events_container.setCardBackgroundColor(holder.itemView.getResources().getColor(R.color.white, null));
 
         holder.events_container.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +63,19 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsViewHolder> {
                 return true;
             }
         });
+        holder.eventCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    Toast.makeText(context, holder.eventTask.getText() + "+++", Toast.LENGTH_SHORT).show();
+                    listener.onCheckboxClick(list.get(holder.getAdapterPosition()), holder.eventCheckBox);
+                } else {
+                    Toast.makeText(context, holder.eventTask.getText() + "---", Toast.LENGTH_SHORT).show();
+                    listener.onCheckboxClick(list.get(holder.getAdapterPosition()), holder.eventCheckBox);
+                }
 
+            }
+        });
     }
 
     @Override
@@ -75,12 +93,14 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsViewHolder> {
 class EventsViewHolder extends RecyclerView.ViewHolder {
 
     CardView events_container;
+    CheckBox eventCheckBox;
     TextView eventTask, eventDate;
 
     public EventsViewHolder(@NonNull View itemView) {
         super(itemView);
 
         events_container = itemView.findViewById(R.id.events_container);
+        eventCheckBox = itemView.findViewById(R.id.eventCheckBox);
         eventTask = itemView.findViewById(R.id.eventTask);
         eventDate = itemView.findViewById(R.id.eventDate);
 

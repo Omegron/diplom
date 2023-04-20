@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,7 +92,7 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         if (requestCode == 102) {
             if (resultCode == Activity.RESULT_OK) {
                 Events new_events = (Events) data.getSerializableExtra("event");
-                database.eventsDAO().update(new_events.getID(), new_events.getTask());
+                database.eventsDAO().updateTask(new_events.getID(), new_events.getTask());
                 events.clear();
                 events.addAll(database.eventsDAO().getAll());
                 eventsListAdapter.notifyDataSetChanged();
@@ -119,6 +120,13 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
             selectedEvent = new Events();
             selectedEvent = events;
             showPopup (cardView);
+        }
+
+        @Override
+        public void onCheckboxClick(Events event, CheckBox checkBox) {
+            event.setState(checkBox.isChecked());
+            database.eventsDAO().updateState(event.getID(), event.getState());
+            eventsListAdapter.notifyDataSetChanged();
         }
     };
 

@@ -21,6 +21,9 @@ public class Events implements Serializable {
     @ColumnInfo(name = "date")
     String date;
 
+    @ColumnInfo(name = "state")
+    boolean state;
+
     public int getID() {
         return ID;
     }
@@ -43,6 +46,14 @@ public class Events implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public boolean getState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
     }
 
     //////////////////////////////////////////////////////////

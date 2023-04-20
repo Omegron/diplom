@@ -22,7 +22,10 @@ public interface EventsDAO {
     List<Events> getDay(String date);
 
     @Query("UPDATE events SET task = :task WHERE ID = :id")
-    void update (int id, String task);
+    void updateTask (int id, String task);
+
+    @Query("UPDATE events SET state = :state WHERE ID = :id")
+    void updateState (int id, boolean state);
 
     @Delete
     void delete (Events events);
