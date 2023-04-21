@@ -115,9 +115,24 @@ public class DailyViewActivity extends AppCompatActivity implements PopupMenu.On
 
         @Override
         public void onCheckboxClick(Events event, CheckBox checkBox) {
+            int positionEvent = 0;
+            for (int i = 0; i < events.size(); i++) {
+                if (event.getID() == events.get(i).getID()) {
+                    positionEvent = i;
+                    break;
+                }
+            }
             event.setState(checkBox.isChecked());
             database.eventsDAO().updateState(event.getID(), event.getState());
-            eventsListAdapter.notifyDataSetChanged();
+            int finalPositionEvent = positionEvent;
+            eventDaysListView.post(new Runnable()
+            {
+                @Override
+                public void run() {
+                    eventsListAdapter.notifyItemChanged(finalPositionEvent);
+                    //eventsListAdapter.notifyDataSetChanged();
+                }
+            });
         }
     };
 

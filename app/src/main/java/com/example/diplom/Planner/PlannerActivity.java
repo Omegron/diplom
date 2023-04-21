@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -44,6 +45,7 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
     private Intent intent;
     private TextView monthYearText;
     private EventsListAdapter eventsListAdapter;
+    private CalendarAdapter calendarAdapter;
     private RecyclerView calendarRecyclerView;
     private RecyclerView eventMonthListView;
     private ArrayList<LocalDate> daysInMonth;
@@ -76,8 +78,6 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
         monthYearText = findViewById(R.id.monthYearTV);
         CalendarUtils.selectedDate = LocalDate.now();
 
-
-
         Bundle arguments = getIntent().getExtras();
         String name = arguments.get("month").toString();
         if (!name.equals("First jump")) {
@@ -85,59 +85,20 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
         }
 
         daysInMonth = daysInMonthArray();
+        System.out.println("//////////////////////////" + daysInMonth.get(0));
         for (int i = 0; i < daysInMonth.size(); i++) {
             Month month1 = daysInMonth.get(i).getMonth();
             Month month2 = daysInMonth.get(10).getMonth();
             if (month1.equals(month2)) {
                 eventsTemp = database.eventsDAO().getDay(CalendarUtils.formattedDate(daysInMonth.get(i)));
             }
-            int stateCount = 0;
             for (Events event : eventsTemp) {
                 events.add(event);
-
             }
         }
         updateRecycler(events);
 
         setMonthView();
-//        View view = getLayoutInflater().inflate(R.layout.events_list, null);
-//        eventCheckBox = view.findViewById(R.id.eventCheckBox);
-//        eventCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                if (isChecked) {
-//                    Toast.makeText(PlannerActivity.this, eventCheckBox.getText(), Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        });
-
-//        View view = getLayoutInflater().inflate(R.layout.calendar_cell, null);
-//        eventStateImage = view.findViewById(R.id.eventState0);
-//        eventStateImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                for (int i = 0; i < daysInMonth.size(); i++) {
-//                    Month month1 = daysInMonth.get(i).getMonth();
-//                    Month month2 = daysInMonth.get(10).getMonth();
-//                    if (month1.equals(month2)) {
-//                        eventsTemp = database.eventsDAO().getDay(CalendarUtils.formattedDate(daysInMonth.get(i)));
-//                    }
-//                    int stateCount = 0;
-//                    for (Events event : eventsTemp) {
-//                        if (event.getState()) {
-//                            stateCount++;
-//                        }
-//
-//                    }
-//                    if (eventsTemp.size() == stateCount - 1) {
-//                        eventStateImage.setImageDrawable(getDrawable(R.drawable.state_2));
-//                    } else {
-//                        eventStateImage.setImageDrawable(getDrawable(R.drawable.state_1));
-//                    }
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -153,6 +114,15 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
                 eventsListAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    private void setMonthView() {
+        monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
+        daysInMonth = daysInMonthArray();
+        calendarAdapter = new CalendarAdapter(this, daysInMonth, this);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
+        calendarRecyclerView.setLayoutManager(layoutManager);
+        calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
     private void updateRecycler(List<Events> events) {
@@ -178,9 +148,36 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
 
         @Override
         public void onCheckboxClick(Events event, CheckBox checkBox) {
+            int positionCalendar = 0;
+            for (int i = 0; i < daysInMonth.size(); i++) {
+                if (event.getDate().equals(CalendarUtils.formattedDate(daysInMonth.get(i)))) {
+                    positionCalendar = i;
+                    break;
+                }
+            }
+            int positionEvent = 0;
+            for (int i = 0; i < events.size(); i++) {
+                if (event.getID() == events.get(i).getID()) {
+                    positionEvent = i;
+                    break;
+                }
+            }
             event.setState(checkBox.isChecked());
             database.eventsDAO().updateState(event.getID(), event.getState());
-            eventsListAdapter.notifyDataSetChanged();
+            //calendarAdapter.notifyDataSetChanged();
+            calendarAdapter.notifyItemChanged(positionCalendar);
+            //eventsListAdapter.notifyItemChanged(positionEvent);
+            int finalPositionEvent = positionEvent;
+            eventMonthListView.post(new Runnable()
+            {
+                @Override
+                public void run() {
+                    eventsListAdapter.notifyItemChanged(finalPositionEvent);
+                    //eventsListAdapter.notifyDataSetChanged();
+                }
+            });
+            //eventsListAdapter.notifyDataSetChanged();
+            //eventsTemp = database.eventsDAO().getDay(CalendarUtils.formattedDate(daysInMonth.get(i)));
         }
     };
 
@@ -195,6 +192,14 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
         if (item.getItemId() == R.id.delete) {
             database.eventsDAO().delete(selectedEvent);
             events.remove(selectedEvent);
+            int positionCalendar = 0;
+            for (int i = 0; i < daysInMonth.size(); i++) {
+                if (selectedEvent.getDate().equals(CalendarUtils.formattedDate(daysInMonth.get(i)))) {
+                    positionCalendar = i;
+                    break;
+                }
+            }
+            calendarAdapter.notifyItemChanged(positionCalendar);
             eventsListAdapter.notifyDataSetChanged();
             Toast.makeText(PlannerActivity.this, "Event removed", Toast.LENGTH_SHORT).show();
             return true;
@@ -220,15 +225,6 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
         }
         setMonthView();
         updateRecycler(events);
-    }
-
-    private void setMonthView() {
-        monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
-        daysInMonth = daysInMonthArray();
-        CalendarAdapter calendarAdapter = new CalendarAdapter(this, daysInMonth, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
-        calendarRecyclerView.setLayoutManager(layoutManager);
-        calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
     public void previousMonthAction(View view) {
@@ -277,22 +273,6 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
             setMonthView();
         }
     }
-
-
-//    CompoundButton.OnCheckedChangeListener
-//    holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//        @Override
-//        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//            Toast.makeText(PlannerActivity.this, checkBox.getText() + " check change to " + String.valueOf(isChecked), Toast.LENGTH_SHORT).show();
-//        }
-//    });
-
-//    public void onCheckboxClicked(View view) {
-//
-//        boolean checked = ((CheckBox) view).isChecked();
-//        Toast.makeText(this, "Event task = " + ((CheckBox) view).toString(), Toast.LENGTH_SHORT).show();
-//        //event.setState(checked);
-//    }
 
     public void weeklyAction(View view) {
         intent = new Intent(this, WeeklyViewActivity.class);

@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diplom.R;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EventsListAdapter extends RecyclerView.Adapter<EventsViewHolder> {
@@ -67,13 +69,12 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsViewHolder> {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    Toast.makeText(context, holder.eventTask.getText() + "+++", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, holder.eventTask.getText() + "+++", Toast.LENGTH_SHORT).show();
                     listener.onCheckboxClick(list.get(holder.getAdapterPosition()), holder.eventCheckBox);
                 } else {
-                    Toast.makeText(context, holder.eventTask.getText() + "---", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, holder.eventTask.getText() + "---", Toast.LENGTH_SHORT).show();
                     listener.onCheckboxClick(list.get(holder.getAdapterPosition()), holder.eventCheckBox);
                 }
-
             }
         });
     }
@@ -96,6 +97,7 @@ class EventsViewHolder extends RecyclerView.ViewHolder {
     CheckBox eventCheckBox;
     TextView eventTask, eventDate;
 
+
     public EventsViewHolder(@NonNull View itemView) {
         super(itemView);
 
@@ -105,5 +107,6 @@ class EventsViewHolder extends RecyclerView.ViewHolder {
         eventDate = itemView.findViewById(R.id.eventDate);
 
     }
+
 
 }

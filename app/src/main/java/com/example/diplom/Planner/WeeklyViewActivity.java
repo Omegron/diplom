@@ -35,6 +35,7 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
     private TextView monthYearText;
     private Intent intent;
     private EventsListAdapter eventsListAdapter;
+    private CalendarAdapter calendarAdapter;
     private RecyclerView calendarRecyclerView;
     private RecyclerView eventWeekListView;
     private ArrayList<LocalDate> days;
@@ -86,6 +87,14 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
                 database.eventsDAO().insert(new_events);
                 events.clear();
                 events.addAll(database.eventsDAO().getAll());
+                int positionCalendar = 0;
+                for (int i = 0; i < days.size(); i++) {
+                    if (new_events.getDate().equals(CalendarUtils.formattedDate(days.get(i)))) {
+                        positionCalendar = i;
+                        break;
+                    }
+                }
+                calendarAdapter.notifyItemChanged(positionCalendar);
                 eventsListAdapter.notifyDataSetChanged();
             }
         }
@@ -98,6 +107,16 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
                 eventsListAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    private void setWeekView() {
+        monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
+        days = daysInWeekArray(CalendarUtils.selectedDate);
+        calendarAdapter = new CalendarAdapter(this, days, this);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
+        calendarRecyclerView.setLayoutManager(layoutManager);
+        calendarRecyclerView.setAdapter(calendarAdapter);
+
     }
 
     private void updateRecycler(List<Events> events) {
@@ -124,9 +143,33 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
 
         @Override
         public void onCheckboxClick(Events event, CheckBox checkBox) {
+            int positionCalendar = 0;
+            for (int i = 0; i < days.size(); i++) {
+                if (event.getDate().equals(CalendarUtils.formattedDate(days.get(i)))) {
+                    positionCalendar = i;
+                    break;
+                }
+            }
+            int positionEvent = 0;
+            for (int i = 0; i < events.size(); i++) {
+                if (event.getID() == events.get(i).getID()) {
+                    positionEvent = i;
+                    break;
+                }
+            }
             event.setState(checkBox.isChecked());
             database.eventsDAO().updateState(event.getID(), event.getState());
-            eventsListAdapter.notifyDataSetChanged();
+            //calendarAdapter.notifyDataSetChanged();
+            calendarAdapter.notifyItemChanged(positionCalendar);
+            int finalPositionEvent = positionEvent;
+            eventWeekListView.post(new Runnable()
+            {
+                @Override
+                public void run() {
+                    eventsListAdapter.notifyItemChanged(finalPositionEvent);
+                    //eventsListAdapter.notifyDataSetChanged();
+                }
+            });
         }
     };
 
@@ -141,6 +184,14 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         if (item.getItemId() == R.id.delete) {
             database.eventsDAO().delete(selectedEvent);
             events.remove(selectedEvent);
+            int positionCalendar = 0;
+            for (int i = 0; i < days.size(); i++) {
+                if (selectedEvent.getDate().equals(CalendarUtils.formattedDate(days.get(i)))) {
+                    positionCalendar = i;
+                    break;
+                }
+            }
+            calendarAdapter.notifyItemChanged(positionCalendar);
             eventsListAdapter.notifyDataSetChanged();
             Toast.makeText(WeeklyViewActivity.this, "Event removed", Toast.LENGTH_SHORT).show();
             return true;
@@ -148,16 +199,7 @@ public class WeeklyViewActivity extends AppCompatActivity implements CalendarAda
         return false;
     }
 
-    private void setWeekView() {
-        monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
-        days = daysInWeekArray(CalendarUtils.selectedDate);
-        System.out.println(days.get(0));
-        CalendarAdapter calendarAdapter = new CalendarAdapter(this, days, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
-        calendarRecyclerView.setLayoutManager(layoutManager);
-        calendarRecyclerView.setAdapter(calendarAdapter);
 
-    }
 
     public void previousWeekAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusWeeks(1);
