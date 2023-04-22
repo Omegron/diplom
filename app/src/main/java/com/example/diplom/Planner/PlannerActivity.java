@@ -29,8 +29,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.example.diplom.Articles.ArticlesActivity;
 import com.example.diplom.CalendarUtils;
+import com.example.diplom.Diary.DiaryActivity;
+import com.example.diplom.Notes.NotesActivity;
 import com.example.diplom.R;
+import com.example.diplom.Settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import java.time.LocalDate;
@@ -301,7 +305,16 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
         int id = menuItem.getItemId();
         Intent intent;
         switch (id) {
-            case R.id.planner: intent = new Intent(this, PlannerActivity.class);
+            case R.id.articles: intent = new Intent(this, ArticlesActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.diary: intent = new Intent(this, DiaryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.notes: intent = new Intent(this, NotesActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.settings: intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
         }

@@ -66,6 +66,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intent);
                 break;
             case R.id.planner: intent = new Intent(this, PlannerActivity.class);
+                intent.putExtra("month", "First jump");
                 startActivity(intent);
                 break;
         }
