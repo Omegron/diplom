@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/state0"
+        android:title="Читання не роозпочато"/>
+    <item android:id="@+id/state1"
+        android:title="Читаю"/>
+    <item android:id="@+id/state2"
+        android:title="Прочитано"/>
+</menu>

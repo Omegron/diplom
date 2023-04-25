@@ -11,7 +11,6 @@ import com.example.diplom.R;
 
 public class ArticleTextActivity extends AppCompatActivity {
     private TextView text_content;
-    private int position = 0;
     private String[] array_articles;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,8 +25,8 @@ public class ArticleTextActivity extends AppCompatActivity {
     private void receiveIntent() {
         Intent intent = getIntent();
         if (intent != null) {
-            position = intent.getIntExtra("position", 0);
-            text_content.setText(array_articles[position]);
+            int id = intent.getIntExtra("id", 0);
+            text_content.setText(array_articles[id -1]);
         }
     }
 }
