@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Planner.WeeklyViewActivity">
+    tools:context=".Diary.DiaryEntryActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -21,6 +21,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/activity_week_view"/>
+    <include layout="@layout/activity_diary_entry"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

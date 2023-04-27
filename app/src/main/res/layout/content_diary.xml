@@ -168,16 +168,43 @@
 
     </LinearLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/diaryRecyclerView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="300dp">
 
-    <ListView
-        android:id="@+id/dailyAffairsListView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/diaryRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/check_write"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5" />
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/checksRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginBottom="26dp"
+            android:contentDescription="@string/add_new_note"
+            android:labelFor="@id/fab_add"
+            android:src="@drawable/ic_plus_icon" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

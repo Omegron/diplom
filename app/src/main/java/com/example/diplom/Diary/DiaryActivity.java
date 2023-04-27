@@ -2,42 +2,69 @@ package com.example.diplom.Diary;
 
 import static com.example.diplom.CalendarUtils.daysInMonthArray;
 import static com.example.diplom.CalendarUtils.monthYearFromDate;
+import static com.example.diplom.CalendarUtils.selectedDate;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-
-import com.example.diplom.Articles.ArticlesActivity;
-import com.example.diplom.CalendarUtils;
-import com.example.diplom.Notes.NotesActivity;
-import com.example.diplom.Planner.PlannerActivity;
-import com.example.diplom.R;
-import com.example.diplom.Settings.SettingsActivity;
-import com.google.android.material.navigation.NavigationView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.example.diplom.CalendarUtils;
+import com.example.diplom.Planner.PlannerActivity;
+import com.example.diplom.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
-public class DiaryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DiaryAdapter.OnItemListener{
+public class DiaryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        DiaryAdapter.OnItemListener, PopupMenu.OnMenuItemClickListener {
 
     private DrawerLayout drawer;
     private Intent intent;
     private TextView monthYearText;
+    private EditText checkWrite;
+    private LinearLayout checkWriteTask;
     private RecyclerView diaryRecyclerView;
+    private RecyclerView checksRecyclerView;
     private ArrayList<LocalDate> daysInMonth;
+    private List<Entries> entries;
+    private Entries entry;
+    private List<Checks> checks = new ArrayList<>();
+    private ChecksDB databaseC;
+    private DiaryAdapter diaryAdapter;
+    private ChecksListAdapter checksListAdapter;
+    private Checks selectedCheck;
+    private ChecksDataPush checksDataPush = new ChecksDataPush();
+    private EntriesDB databaseE;
+    private LocalDate dateNow;
+    private int cellView = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,34 +80,250 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        initWidgets();
+        FloatingActionButton fab_add = findViewById(R.id.fab_add);
+
+        databaseE = EntriesDB.getInstance(this);
+        entries = databaseE.entriesDAO().getAll();
+
         CalendarUtils.selectedDate = LocalDate.now();
-        setMonthView();
+        dateNow = LocalDate.now();
+        System.out.println("test0 " + CalendarUtils.selectedDate);
+
+        databaseC = ChecksDB.getInstance(this);
+        checksDataPush.tasksDBDataPush(this);
+        checksDataPush.checksForDayPush(this, dateNow);
+        checks = databaseC.checksDAO().getDay(CalendarUtils.formattedDate(dateNow));
+        //System.out.println("Checks = " + databaseC.checksDAO().getAll());
+        for (Checks check : databaseC.checksDAO().getAll()) {
+            System.out.println("Date = " + check.getDate());
+            System.out.println("Task = " + check.getTask());
+        }
+
+        initWidgets();
+
+        setMonthView(cellView);
+        updateRecycler(checks);
+
+        checkWriteTask = findViewById(R.id.checkWriteTask);
+        checkWrite = findViewById(R.id.checkWrite);
+        Button checkSave = findViewById(R.id.checkSave);
+        fab_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                diaryRecyclerView.setVisibility(View.GONE);
+                checkWriteTask.setVisibility(View.VISIBLE);
+                checkSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String task = checkWrite.getText().toString();
+
+                        if (task.isEmpty()) {
+                            Toast.makeText(DiaryActivity.this, "Задача пуста", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        checksDataPush.insertChecksForDay(task, dateNow);
+                        Intent intent = new Intent(DiaryActivity.this, DiaryActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
+
     }
 
     private void initWidgets() {
         diaryRecyclerView = findViewById(R.id.diaryRecyclerView);
+        checksRecyclerView = findViewById(R.id.checksRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
     }
 
-    private void setMonthView() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101) {
+            if (resultCode == Activity.RESULT_OK) {
+                Entries new_entries = (Entries) data.getSerializableExtra("entry");
+                databaseE.entriesDAO().insert(new_entries);
+                int positionCalendar = 0;
+                for (int i = 0; i < daysInMonth.size(); i++) {
+                    if (new_entries.getDate().equals(CalendarUtils.formattedDate(daysInMonth.get(i)))) {
+                        positionCalendar = i;
+                        break;
+                    }
+                }
+                diaryAdapter.notifyItemChanged(positionCalendar);
+            }
+        }
+        if (requestCode == 102) {
+            if (resultCode == Activity.RESULT_OK) {
+                Entries new_entries = (Entries) data.getSerializableExtra("entry");
+                databaseE.entriesDAO().updateEmotion(new_entries.getID(), new_entries.getEmotion());
+                databaseE.entriesDAO().updateNote(new_entries.getID(), new_entries.getNote());
+
+                int positionCalendar = 0;
+                for (int i = 0; i < daysInMonth.size(); i++) {
+                    if (new_entries.getDate().equals(CalendarUtils.formattedDate(daysInMonth.get(i)))) {
+                        positionCalendar = i;
+                        break;
+                    }
+                }
+                diaryAdapter.notifyItemChanged(positionCalendar);
+            }
+        }
+    }
+
+    private void setMonthView(int cellView) {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
         daysInMonth = daysInMonthArray();
-        DiaryAdapter diaryAdapter = new DiaryAdapter(this, daysInMonth, this);
+        diaryAdapter = new DiaryAdapter(this, daysInMonth, this, cellView);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         diaryRecyclerView.setLayoutManager(layoutManager);
         diaryRecyclerView.setAdapter(diaryAdapter);
     }
 
+    private void updateRecycler(List<Checks> checks) {
+        checksRecyclerView.setHasFixedSize(true);
+        checksRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL));
+        checksListAdapter = new ChecksListAdapter(DiaryActivity.this, checks, checksClickListener);
+        checksRecyclerView.setAdapter(checksListAdapter);
+    }
+
+    private final ChecksClickListener checksClickListener = new ChecksClickListener() {
+
+        @Override
+        public void onLongClick(Checks check, CardView cardView) {
+            selectedCheck = check;
+            showPopup (cardView);
+        }
+
+        @Override
+        public void onCheckboxClick(Checks check, CheckBox checkBox) {
+            int positionEvent = 0;
+            for (int i = 0; i < checks.size(); i++) {
+                if (check.getID() == checks.get(i).getID()) {
+                    positionEvent = i;
+                    break;
+                }
+            }
+            check.setState(checkBox.isChecked());
+            databaseC.checksDAO().updateState(check.getID(), check.getState());
+            int checkCount = 0;
+            double rating;
+            for (Checks checkC : checks) {
+                if (checkC.getState()) {
+                    checkCount = checkCount + 1;
+                }
+            }
+            rating = (10.0 / checks.size()) * checkCount;
+            String rating_2 = new DecimalFormat("#0.00").format(rating);
+            entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(dateNow));
+            if (entry != null) {
+                databaseE.entriesDAO().updateRating(entry.getID(), rating_2);
+            } else {
+                entry = new Entries();
+                entry.setNote("");
+                entry.setEmotion("0");
+                entry.setRating(rating_2);
+                entry.setDate(CalendarUtils.formattedDate(dateNow));
+                databaseE.entriesDAO().insert(entry);
+            }
+            int positionCalendar = 0;
+            for (int i = 0; i < daysInMonth.size(); i++) {
+                if (entry.getDate().equals(CalendarUtils.formattedDate(daysInMonth.get(i)))) {
+                    positionCalendar = i;
+                    break;
+                }
+            }
+            diaryAdapter.notifyItemChanged(positionCalendar);
+            int finalPositionEvent = positionEvent;
+            checksRecyclerView.post(new Runnable()
+            {
+                @Override
+                public void run() {
+                    checksListAdapter.notifyItemChanged(finalPositionEvent);
+                    //eventsListAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+    };
+
+    private void showPopup(CardView cardView) {
+        PopupMenu popupMenu = new PopupMenu(this, cardView);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.check_popup_menu);
+        popupMenu.show();
+    }
+
+    public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.delete) {
+            System.out.println("Size0 = " + checks.size());
+            checksDataPush.deleteChecksForDay(selectedCheck.getTask());
+            checks.remove(selectedCheck);
+            System.out.println("Size1 = " + checks.size());
+            Toast.makeText(DiaryActivity.this, "Event removed", Toast.LENGTH_SHORT).show();
+            updateRecycler(checks);
+            int checkCount = 0;
+            double rating;
+            System.out.println("Size3 = " + checks.size());
+            for (Checks checkC : checks) {
+                if (checkC.getState()) {
+                    checkCount = checkCount + 1;
+                }
+            }
+            System.out.println("Size4 = " + checks.size());
+            rating = (10.0 / checks.size()) * checkCount;
+            String rating_2 = new DecimalFormat("#0.00").format(rating);
+            entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(dateNow));
+            entry.setRating(rating_2);
+            int positionCalendar = 0;
+            for (int i = 0; i < daysInMonth.size(); i++) {
+                if (entry.getDate().equals(CalendarUtils.formattedDate(daysInMonth.get(i)))) {
+                    positionCalendar = i;
+                    break;
+                }
+            }
+            diaryAdapter.notifyItemChanged(positionCalendar);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.update) {
+            Button checkSave = findViewById(R.id.checkSave);
+            diaryRecyclerView.setVisibility(View.GONE);
+            checkWriteTask.setVisibility(View.VISIBLE);
+            checkWrite.setText(selectedCheck.getTask());
+            checkSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String task = checkWrite.getText().toString();
+
+                    if (task.isEmpty()) {
+                        Toast.makeText(DiaryActivity.this, "Задача пуста", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    checksDataPush.updateChecksForDay(selectedCheck.getTask(), task);
+                    Intent intent = new Intent(DiaryActivity.this, DiaryActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(DiaryActivity.this, "Event update", Toast.LENGTH_SHORT).show();
+                }
+            });
+            updateRecycler(checks);
+            return true;
+        }
+
+        return false;
+    }
+
     public void previousMonthAction(View view) {
         CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
-        setMonthView();
+        setMonthView(cellView);
+        updateRecycler(checks);
     }
 
     public void nextMonthAction(View view) {
         if (!CalendarUtils.selectedDate.plusMonths(1).isAfter(LocalDate.now())) {
             CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
-            setMonthView();
+            setMonthView(cellView);
+            updateRecycler(checks);
         }
     }
 
@@ -88,26 +331,51 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
     public void onItemClick(int position, LocalDate date) {
         if(date != null && date.getMonth().equals(CalendarUtils.selectedDate.getMonth()) && !date.isAfter(LocalDate.now())) {
             CalendarUtils.selectedDate = date;
-            setMonthView();
+            Entries entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(date));
+            if (entry != null) {
+                System.out.println("Get Emotion = " + entry.getEmotion());
+            }
+            setMonthView(cellView);
         }
     }
 
-    public void emotionsAction() {
-
+    public void emotionsAction(View view) {
+        if (!(cellView == 1)) {
+            cellView = 1;
+        } else {
+            cellView = 0;
+        }
+        setMonthView(cellView);
     }
 
-    public void ratingAction() {
-
+    public void ratingAction(View view) {
+        if (!(cellView == 2)) {
+            cellView = 2;
+        } else {
+            cellView = 0;
+        }
+        setMonthView(cellView);
     }
 
     public void diaryEntryAction(View view) {
-        intent = new Intent(this, DiaryEntryActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent(DiaryActivity.this, DiaryEntryActivity.class);
+        boolean isEntry = false;
+        if (!entries.isEmpty()) {
+            Entries entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(selectedDate));
+            if (entry != null) {
+                isEntry = true;
+                intent.putExtra("old_entry", entry);
+                startActivityForResult(intent, 102);
+            } else {
+                startActivityForResult(intent, 101);
+            }
+        } else {
+            startActivityForResult(intent, 101);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.diary, menu);
         return true;
     }
@@ -117,21 +385,13 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
         int id = menuItem.getItemId();
         Intent intent;
         switch (id) {
-            case R.id.articles: intent = new Intent(this, ArticlesActivity.class);
-                startActivity(intent);
-                break;
             case R.id.planner: intent = new Intent(this, PlannerActivity.class);
                 intent.putExtra("month", "First jump");
-                startActivity(intent);
-                break;
-            case R.id.notes: intent = new Intent(this, NotesActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.settings: intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
