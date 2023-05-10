@@ -39,7 +39,6 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesViewHolder>{
 
         holder.noteTitle.setText(list.get(position).getTitle());
         holder.noteTitle.setSelected(true);
-
         holder.noteContent.setText(list.get(position).getNotes());
         holder.noteContent.setSelected(true);
 

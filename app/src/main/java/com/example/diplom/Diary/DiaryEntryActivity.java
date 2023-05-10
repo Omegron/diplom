@@ -48,21 +48,21 @@ public class DiaryEntryActivity extends AppCompatActivity {
             entries = (Entries) getIntent().getSerializableExtra("old_entry");
             System.out.println("Emotion = " + entries.getEmotion());
             if (entries.getEmotion().equals("0")) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.icon_0));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mood_0));
             } else if (entries.getEmotion().equals("1")) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.icon_1));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mood_1));
             } else if (entries.getEmotion().equals("2")) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.icon_2));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mood_2));
             } else if (entries.getEmotion().equals("3")) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.icon_3));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mood_3));
             } else if (entries.getEmotion().equals("4")) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.icon_4));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mood_4));
             } else if (entries.getEmotion().equals("5")) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.icon_5));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mood_5));
             } else if (entries.getEmotion().equals("6")) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.icon_6));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mood_6));
             } else if (entries.getEmotion().equals("7")) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.icon_7));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mood_7));
             }
             emotion = entries.getEmotion();
             rating = entries.getRating();
@@ -77,7 +77,7 @@ public class DiaryEntryActivity extends AppCompatActivity {
         emotion_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.icon_0));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.mood_0));
                 Toast.makeText(DiaryEntryActivity.this, "Choose " + emotion, Toast.LENGTH_SHORT).show();
                 emotion = "0";
             }
@@ -86,7 +86,7 @@ public class DiaryEntryActivity extends AppCompatActivity {
         emotion_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.icon_1));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.mood_1));
                 Toast.makeText(DiaryEntryActivity.this, "Choose " + emotion, Toast.LENGTH_SHORT).show();
                 emotion = "1";
             }
@@ -95,7 +95,7 @@ public class DiaryEntryActivity extends AppCompatActivity {
         emotion_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.icon_2));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.mood_2));
                 Toast.makeText(DiaryEntryActivity.this, "Choose " + emotion, Toast.LENGTH_SHORT).show();
                 emotion = "2";
             }
@@ -104,7 +104,7 @@ public class DiaryEntryActivity extends AppCompatActivity {
         emotion_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.icon_3));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.mood_3));
                 Toast.makeText(DiaryEntryActivity.this, "Choose " + emotion, Toast.LENGTH_SHORT).show();
                 emotion = "3";
             }
@@ -113,7 +113,7 @@ public class DiaryEntryActivity extends AppCompatActivity {
         emotion_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.icon_4));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.mood_4));
                 Toast.makeText(DiaryEntryActivity.this, "Choose " + emotion, Toast.LENGTH_SHORT).show();
                 emotion = "4";
             }
@@ -122,7 +122,7 @@ public class DiaryEntryActivity extends AppCompatActivity {
         emotion_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.icon_5));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.mood_5));
                 Toast.makeText(DiaryEntryActivity.this, "Choose " + emotion, Toast.LENGTH_SHORT).show();
                 emotion = "5";
             }
@@ -131,7 +131,7 @@ public class DiaryEntryActivity extends AppCompatActivity {
         emotion_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.icon_6));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.mood_6));
                 Toast.makeText(DiaryEntryActivity.this, "Choose " + emotion, Toast.LENGTH_SHORT).show();
                 emotion = "6";
             }
@@ -140,7 +140,7 @@ public class DiaryEntryActivity extends AppCompatActivity {
         emotion_7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.icon_7));
+                emotion_choice.setImageDrawable(AppCompatResources.getDrawable(DiaryEntryActivity.this, R.drawable.mood_7));
                 Toast.makeText(DiaryEntryActivity.this, "Choose " + emotion, Toast.LENGTH_SHORT).show();
                 emotion = "7";
             }

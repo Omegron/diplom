@@ -71,7 +71,7 @@
                     android:id="@+id/emotion_7"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/icon_7"/>
+                    android:src="@drawable/mood_7"/>
 
             </LinearLayout>
 
@@ -87,7 +87,7 @@
                     android:id="@+id/emotion_0"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/icon_0"/>
+                    android:src="@drawable/mood_0"/>
 
             </LinearLayout>
 
@@ -104,7 +104,7 @@
                     android:id="@+id/emotion_1"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/icon_1"/>
+                    android:src="@drawable/mood_1"/>
 
             </LinearLayout>
 
@@ -129,7 +129,7 @@
                     android:id="@+id/emotion_6"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/icon_6"/>
+                    android:src="@drawable/mood_6"/>
 
             </LinearLayout>
 
@@ -144,7 +144,7 @@
                     android:id="@+id/emotion_choice"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/icon_0"/>
+                    android:src="@drawable/mood_0"/>
 
             </LinearLayout>
 
@@ -160,7 +160,7 @@
                     android:id="@+id/emotion_2"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/icon_2"/>
+                    android:src="@drawable/mood_2"/>
 
             </LinearLayout>
 
@@ -186,7 +186,7 @@
                     android:id="@+id/emotion_5"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/icon_5"/>
+                    android:src="@drawable/mood_5"/>
 
             </LinearLayout>
 
@@ -202,7 +202,7 @@
                     android:id="@+id/emotion_4"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/icon_4"/>
+                    android:src="@drawable/mood_4"/>
 
             </LinearLayout>
 
@@ -219,7 +219,7 @@
                     android:id="@+id/emotion_3"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/icon_3"/>
+                    android:src="@drawable/mood_3"/>
 
             </LinearLayout>
 

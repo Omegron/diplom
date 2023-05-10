@@ -61,24 +61,24 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryViewHolder> {
         if (entry != null) {
             System.out.println("Get Emotion in Adapter = " + entry.getEmotion());
             if (entry.getEmotion().equals("0")) {
-                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.icon_0));
+                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.mood_0));
             } else if (entry.getEmotion().equals("1")) {
-                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.icon_1));
+                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.mood_1));
             } else if (entry.getEmotion().equals("2")) {
-                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.icon_2));
+                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.mood_2));
             } else if (entry.getEmotion().equals("3")) {
-                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.icon_3));
+                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.mood_3));
             } else if (entry.getEmotion().equals("4")) {
-                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.icon_4));
+                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.mood_4));
             } else if (entry.getEmotion().equals("5")) {
-                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.icon_5));
+                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.mood_5));
             } else if (entry.getEmotion().equals("6")) {
-                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.icon_6));
+                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.mood_6));
             } else if (entry.getEmotion().equals("7")) {
-                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.icon_7));
+                holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.mood_7));
             }
         } else {
-            holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.icon_0));
+            holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.mood_0));
         }
         holder.emotions.setSelected(true);
 
