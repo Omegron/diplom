@@ -21,6 +21,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private Toolbar toolbar;
@@ -30,7 +32,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String str = "100";
+        String[] array_quotes = this.getResources().getStringArray(R.array.quotes_array);
+        int randomQuote = new Random().nextInt(array_quotes.length);
+        String str = array_quotes[randomQuote];
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.randomQuote);
         textView.setText(str);
