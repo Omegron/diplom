@@ -14,6 +14,11 @@ public class CalendarUtils {
         return date.format(formatter);
     }
 
+    public static LocalDate formattedDateReverse(String dateS) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+        return LocalDate.parse(dateS, formatter);
+    }
+
     public static String monthYearFromDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
         return date.format(formatter);
@@ -37,7 +42,7 @@ public class CalendarUtils {
 
         LocalDate firstOfMonth = CalendarUtils.selectedDate.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue() - 1;
-        System.out.println(dayOfWeek);
+
 
         for(int i = 1; i <= 42; i++) {
             if(i <= dayOfWeek) {

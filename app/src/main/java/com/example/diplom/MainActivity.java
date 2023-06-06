@@ -2,6 +2,7 @@ package com.example.diplom;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private TextView textView;
+    private String dummyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -37,9 +37,6 @@ public class ChecksDataPush extends AppCompatActivity {
 
     void checksForDayPush(Context context, LocalDate date) {
 
-        System.out.println("test1 " + date);
-        System.out.println("test2 " + CalendarUtils.formattedDate(date));
-
         databaseC = ChecksDB.getInstance(context);
         List<Tasks> tasks = databaseT.tasksDAO().getAll();
 
@@ -57,9 +54,7 @@ public class ChecksDataPush extends AppCompatActivity {
                 if (!temp) {
                     check = new Checks();
                     check.setTask(tasks.get(i).getTask());
-                    System.out.println("test3 " + CalendarUtils.formattedDate(date));
                     check.setDate(CalendarUtils.formattedDate(date));
-                    System.out.println("test4 " + check.getDate());
                     databaseC.checksDAO().insert(check);
                     checks.add(check);
                 }
@@ -68,9 +63,7 @@ public class ChecksDataPush extends AppCompatActivity {
             for (Tasks task : tasks) {
                 check = new Checks();
                 check.setTask(task.getTask());
-                System.out.println("test5 " + CalendarUtils.formattedDate(date));
                 check.setDate(CalendarUtils.formattedDate(date));
-                System.out.println("test6 " + check.getDate());
                 databaseC.checksDAO().insert(check);
             }
         }

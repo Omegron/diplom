@@ -89,7 +89,6 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
         }
 
         daysInMonth = daysInMonthArray();
-        System.out.println("//////////////////////////" + daysInMonth.get(0));
         for (int i = 0; i < daysInMonth.size(); i++) {
             Month month1 = daysInMonth.get(i).getMonth();
             Month month2 = daysInMonth.get(10).getMonth();
@@ -168,20 +167,15 @@ public class PlannerActivity extends AppCompatActivity implements NavigationView
             }
             event.setState(checkBox.isChecked());
             database.eventsDAO().updateState(event.getID(), event.getState());
-            //calendarAdapter.notifyDataSetChanged();
             calendarAdapter.notifyItemChanged(positionCalendar);
-            //eventsListAdapter.notifyItemChanged(positionEvent);
             int finalPositionEvent = positionEvent;
             eventMonthListView.post(new Runnable()
             {
                 @Override
                 public void run() {
                     eventsListAdapter.notifyItemChanged(finalPositionEvent);
-                    //eventsListAdapter.notifyDataSetChanged();
                 }
             });
-            //eventsListAdapter.notifyDataSetChanged();
-            //eventsTemp = database.eventsDAO().getDay(CalendarUtils.formattedDate(daysInMonth.get(i)));
         }
     };
 

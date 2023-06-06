@@ -1,13 +1,10 @@
 package com.example.diplom.Planner;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -75,10 +72,16 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                 }
                 if (eventsTemp.size() == stateCount) {
                     holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_2));
-                    System.out.println("date = " + date);
                 } else {
                     holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_1));
-                    System.out.println("date = " + date);
+                }
+            } else {
+                if(date.equals(CalendarUtils.selectedDate)) {
+                    holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_gray));
+                } else if(date.equals(LocalDate.now())) {
+                    holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_yellow));
+                } else {
+                    holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_white));
                 }
             }
             holder.dayOfMonth.setTextColor(Color.BLACK);
@@ -86,14 +89,6 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             holder.dayOfMonth.setTextColor(Color.WHITE);
         } else {
             holder.dayOfMonth.setTextColor(Color.LTGRAY);
-        }
-
-        for (LocalDate date1 : days) {
-            if(date1.equals(CalendarUtils.selectedDate)) {
-                //int color=((ColorDrawable)holder.parentView.getBackground()).getColor();
-                System.out.println(((ColorDrawable)holder.parentView.getBackground()).getColor());
-                //holder.parentView.setBackgroundColor(Color.LTGRAY);
-            }
         }
 
     }

@@ -46,7 +46,6 @@ public class DiaryEntryActivity extends AppCompatActivity {
         entries = new Entries();
         try {
             entries = (Entries) getIntent().getSerializableExtra("old_entry");
-            System.out.println("Emotion = " + entries.getEmotion());
             if (entries.getEmotion().equals("0")) {
                 emotion_choice.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mood_0));
             } else if (entries.getEmotion().equals("1")) {
@@ -71,8 +70,6 @@ public class DiaryEntryActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println("IsOldEntry " + isOldEntry);
 
         emotion_0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,27 +143,20 @@ public class DiaryEntryActivity extends AppCompatActivity {
             }
         });
 
-        System.out.println("emotion1 = " + emotion);
-
         emotionSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Test " + isOldEntry);
 
                 String note = entryNote.getText().toString();
 
                 if (!isOldEntry) {
                     entries = new Entries();
-                    System.out.println("!IsOldEntry" + !isOldEntry);
                 }
-                System.out.println("emotion2 = " + emotion);
 
                 entries.setNote(note);
                 entries.setRating(rating);
                 entries.setEmotion(emotion);
                 entries.setDate(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
-                System.out.println("Control test1 = " + entries.getEmotion());
-                System.out.println("Control id test1 = " + entries.getID());
                 Intent intent = new Intent();
                 intent.putExtra("entry", entries);
                 setResult(Activity.RESULT_OK, intent);

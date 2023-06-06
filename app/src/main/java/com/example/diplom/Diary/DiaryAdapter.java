@@ -59,7 +59,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryViewHolder> {
         holder.rating.setSelected(true);
 
         if (entry != null) {
-            System.out.println("Get Emotion in Adapter = " + entry.getEmotion());
+
             if (entry.getEmotion().equals("0")) {
                 holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.mood_0));
             } else if (entry.getEmotion().equals("1")) {
@@ -112,14 +112,13 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryViewHolder> {
         }
         if (date.isAfter(LocalDate.now())) {
             holder.dayOfMonth.setTextColor(Color.LTGRAY);
-            //holder.eventState.setTextColor(Color.LTGRAY);
             holder.rating.setTextColor(Color.LTGRAY);
         } else if(date.getMonth().equals(CalendarUtils.selectedDate.getMonth())) {
             holder.dayOfMonth.setTextColor(Color.BLACK);
             holder.rating.setTextColor(Color.BLACK);
         } else {
             holder.dayOfMonth.setTextColor(Color.WHITE);
-            holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0));
+            holder.emotions.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_white));
             holder.rating.setTextColor(Color.WHITE);
         }
     }

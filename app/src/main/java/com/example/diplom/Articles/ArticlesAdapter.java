@@ -54,7 +54,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         } else if (Objects.equals(mList.get(position).getState(), "2")) {
             holder.readState.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.state_2));
         } else {
-            holder.readState.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.state_0));
+            holder.readState.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.state_0_white));
         }
         holder.readState.setSelected(true);
     }
@@ -108,7 +108,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.state0:
-                    this.readState.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.state_0));
+                    this.readState.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.state_0_white));
                     database.articlesDAO().stateChange(selectedArticle.getID(), "0");
                     Toast.makeText(context, "Читання не роозпочато", Toast.LENGTH_SHORT).show();
                     articlesAdapter.notifyDataSetChanged();

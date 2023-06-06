@@ -1,6 +1,7 @@
 package com.example.diplom.Diary;
 
 import static com.example.diplom.CalendarUtils.daysInMonthArray;
+import static com.example.diplom.CalendarUtils.formattedDateReverse;
 import static com.example.diplom.CalendarUtils.monthYearFromDate;
 import static com.example.diplom.CalendarUtils.selectedDate;
 
@@ -31,9 +32,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.example.diplom.Articles.ArticlesActivity;
 import com.example.diplom.CalendarUtils;
+import com.example.diplom.Notes.NotesActivity;
 import com.example.diplom.Planner.PlannerActivity;
 import com.example.diplom.R;
+import com.example.diplom.Settings.SettingsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -62,7 +66,6 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
     private Checks selectedCheck;
     private ChecksDataPush checksDataPush = new ChecksDataPush();
     private EntriesDB databaseE;
-    private LocalDate dateNow;
     private int cellView = 0;
 
 
@@ -86,18 +89,11 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
         entries = databaseE.entriesDAO().getAll();
 
         CalendarUtils.selectedDate = LocalDate.now();
-        dateNow = LocalDate.now();
-        System.out.println("test0 " + CalendarUtils.selectedDate);
 
         databaseC = ChecksDB.getInstance(this);
         checksDataPush.tasksDBDataPush(this);
-        checksDataPush.checksForDayPush(this, dateNow);
-        checks = databaseC.checksDAO().getDay(CalendarUtils.formattedDate(dateNow));
-        //System.out.println("Checks = " + databaseC.checksDAO().getAll());
-        for (Checks check : databaseC.checksDAO().getAll()) {
-            System.out.println("Date = " + check.getDate());
-            System.out.println("Task = " + check.getTask());
-        }
+        checksDataPush.checksForDayPush(this, CalendarUtils.selectedDate);
+        checks = databaseC.checksDAO().getDay(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
 
         initWidgets();
 
@@ -121,7 +117,7 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
                             Toast.makeText(DiaryActivity.this, "Задача пуста", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        checksDataPush.insertChecksForDay(task, dateNow);
+                        checksDataPush.insertChecksForDay(task, CalendarUtils.selectedDate);
                         Intent intent = new Intent(DiaryActivity.this, DiaryActivity.class);
                         startActivity(intent);
                     }
@@ -216,7 +212,7 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
             }
             rating = (10.0 / checks.size()) * checkCount;
             String rating_2 = new DecimalFormat("#0.00").format(rating);
-            entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(dateNow));
+            entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
             if (entry != null) {
                 databaseE.entriesDAO().updateRating(entry.getID(), rating_2);
             } else {
@@ -224,7 +220,7 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
                 entry.setNote("");
                 entry.setEmotion("0");
                 entry.setRating(rating_2);
-                entry.setDate(CalendarUtils.formattedDate(dateNow));
+                entry.setDate(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
                 databaseE.entriesDAO().insert(entry);
             }
             int positionCalendar = 0;
@@ -241,7 +237,6 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
                 @Override
                 public void run() {
                     checksListAdapter.notifyItemChanged(finalPositionEvent);
-                    //eventsListAdapter.notifyDataSetChanged();
                 }
             });
         }
@@ -256,33 +251,27 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
 
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.delete) {
-            System.out.println("Size0 = " + checks.size());
             checksDataPush.deleteChecksForDay(selectedCheck.getTask());
             checks.remove(selectedCheck);
-            System.out.println("Size1 = " + checks.size());
             Toast.makeText(DiaryActivity.this, "Event removed", Toast.LENGTH_SHORT).show();
             updateRecycler(checks);
-            int checkCount = 0;
-            double rating;
-            System.out.println("Size3 = " + checks.size());
-            for (Checks checkC : checks) {
-                if (checkC.getState()) {
-                    checkCount = checkCount + 1;
+            for (Entries entriesC : entries) {
+                CalendarUtils.selectedDate = formattedDateReverse(entriesC.getDate());
+                checks = databaseC.checksDAO().getDay(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
+                int checkCount = 0;
+                double rating;
+                for (Checks checkC : checks) {
+                    if (checkC.getState()) {
+                        checkCount = checkCount + 1;
+                    }
                 }
+                rating = (10.0 / checks.size()) * checkCount;
+                String rating_2 = new DecimalFormat("#0.00").format(rating);
+                entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
+                entry.setRating(rating_2);
+                databaseE.entriesDAO().updateRating(entry.getID(), rating_2);
             }
-            System.out.println("Size4 = " + checks.size());
-            rating = (10.0 / checks.size()) * checkCount;
-            String rating_2 = new DecimalFormat("#0.00").format(rating);
-            entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(dateNow));
-            entry.setRating(rating_2);
-            int positionCalendar = 0;
-            for (int i = 0; i < daysInMonth.size(); i++) {
-                if (entry.getDate().equals(CalendarUtils.formattedDate(daysInMonth.get(i)))) {
-                    positionCalendar = i;
-                    break;
-                }
-            }
-            diaryAdapter.notifyItemChanged(positionCalendar);
+            diaryAdapter.notifyDataSetChanged();
             return true;
         }
 
@@ -309,7 +298,6 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
             updateRecycler(checks);
             return true;
         }
-
         return false;
     }
 
@@ -331,11 +319,11 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
     public void onItemClick(int position, LocalDate date) {
         if(date != null && date.getMonth().equals(CalendarUtils.selectedDate.getMonth()) && !date.isAfter(LocalDate.now())) {
             CalendarUtils.selectedDate = date;
-            Entries entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(date));
-            if (entry != null) {
-                System.out.println("Get Emotion = " + entry.getEmotion());
-            }
+            checksDataPush.tasksDBDataPush(this);
+            checksDataPush.checksForDayPush(this, CalendarUtils.selectedDate);
+            checks = databaseC.checksDAO().getDay(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
             setMonthView(cellView);
+            updateRecycler(checks);
         }
     }
 
@@ -385,8 +373,17 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
         int id = menuItem.getItemId();
         Intent intent;
         switch (id) {
+            case R.id.articles: intent = new Intent(this, ArticlesActivity.class);
+                startActivity(intent);
+                break;
             case R.id.planner: intent = new Intent(this, PlannerActivity.class);
                 intent.putExtra("month", "First jump");
+                startActivity(intent);
+                break;
+            case R.id.notes: intent = new Intent(this, NotesActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.settings: intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
         }

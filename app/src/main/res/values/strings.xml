@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Diplom</string>
+    <string name="app_name">Самовдосконалення</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Самовдосконалення</string>
@@ -44,5 +44,7 @@
     <string name="friday">П\'ятн</string>
     <string name="saturday">Суб</string>
     <string name="sunday">Нед</string>
+    
+    <string name="dummyText">Якщо ви не знайдете час, щоб попрацювати над створенням того життя, якого ви хочете, ви зрештою будете змушені приділяти багато часу справам з життям, яке вам не хочеться», - Кевін Нго</string>
 
 </resources>

@@ -23,6 +23,6 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="end"
-        android:src="@drawable/state_0"/>
+        android:src="@drawable/state_0_white"/>
 
 </androidx.cardview.widget.CardView>
