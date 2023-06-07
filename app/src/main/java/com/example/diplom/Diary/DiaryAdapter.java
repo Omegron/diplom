@@ -51,6 +51,15 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryViewHolder> {
         entry = database.entriesDAO().getDay(CalendarUtils.formattedDate(date));
 
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
+
+        if(date.equals(CalendarUtils.selectedDate)) {
+            holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_gray));
+        } else if(date.equals(LocalDate.now())) {
+            holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_yellow));
+        } else {
+            holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_white));
+        }
+
         if (entry != null) {
             holder.rating.setText(entry.getRating());
         } else {

@@ -17,6 +17,7 @@ public class DiaryViewHolder extends RecyclerView.ViewHolder implements View.OnC
     private final ArrayList<LocalDate> days;
     public final View parentView;
     public final TextView dayOfMonth;
+    public final ImageView eventState;
     public final TextView rating;
     public final ImageView emotions;
     private final DiaryAdapter.OnItemListener onItemListener;
@@ -24,6 +25,7 @@ public class DiaryViewHolder extends RecyclerView.ViewHolder implements View.OnC
         super(itemView);
         parentView = itemView.findViewById(R.id.parentView);
         dayOfMonth = itemView.findViewById(R.id.cellDayText);
+        eventState = itemView.findViewById(R.id.eventState);
         rating = itemView.findViewById(R.id.cellDayRating);
         emotions = itemView.findViewById(R.id.cellDayEmotions);
         this.onItemListener = onItemListener;

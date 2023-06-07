@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.diplom.CalendarUtils;
 import com.example.diplom.R;
 
 import java.time.LocalDate;
@@ -43,7 +44,7 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsViewHolder> {
         holder.eventTask.setText(list.get(position).getTask());
         holder.eventTask.setSelected(true);
 
-        holder.eventDate.setText(list.get(position).getDate());
+        holder.eventDate.setText(CalendarUtils.formattedDateUa(CalendarUtils.formattedDateReverse(list.get(position).getDate())));
         holder.eventDate.setSelected(true);
 
         holder.eventCheckBox.setChecked(list.get(position).getState());

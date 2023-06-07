@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.diplom.CalendarUtils;
 import com.example.diplom.R;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class NotesTakerActivity extends AppCompatActivity {
@@ -53,8 +55,9 @@ public class NotesTakerActivity extends AppCompatActivity {
                     Toast.makeText(NotesTakerActivity.this, "Нотаток пустий", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-                Date date = new Date();
+                SimpleDateFormat formatter = new SimpleDateFormat(" HH:mm:ss");
+                Date dateD = new Date();
+                LocalDate dateL = LocalDate.now();
 
                 if (!isOldNote) {
                     notes = new Notes();
@@ -62,7 +65,7 @@ public class NotesTakerActivity extends AppCompatActivity {
 
                 notes.setTitle(title);
                 notes.setNotes(content);
-                notes.setDate(formatter.format(date));
+                notes.setDate(CalendarUtils.formattedDateUa(dateL) + formatter.format(dateD));
 
                 Intent intent = new Intent();
                 intent.putExtra("note", notes);

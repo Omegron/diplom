@@ -25,8 +25,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventSearchListView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchNote"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp" />
 
 </LinearLayout>

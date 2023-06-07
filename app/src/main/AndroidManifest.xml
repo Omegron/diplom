@@ -31,13 +31,17 @@
             android:label="@string/title_activity_planner"
             android:theme="@style/Theme.Diplom.NoActionBar"/>
         <activity android:name=".Planner.WeeklyViewActivity"
-            android:label="@string/title_activity_planner"/>
+            android:label="@string/title_activity_planner"
+            android:theme="@style/Theme.Diplom.NoActionBar"/>
         <activity android:name=".Planner.DailyViewActivity"
-            android:label="@string/title_activity_planner"/>
+            android:label="@string/title_activity_planner"
+            android:theme="@style/Theme.Diplom.NoActionBar"/>
         <activity android:name=".Planner.EventsTakerActivity"
-            android:label="@string/title_activity_planner"/>
+            android:label="@string/title_activity_planner"
+            android:theme="@style/Theme.Diplom.NoActionBar"/>
         <activity android:name=".Planner.SearchEventActivity"
-            android:label="@string/title_activity_planner"/>
+            android:label="@string/title_activity_planner"
+            android:theme="@style/Theme.Diplom.NoActionBar"/>
         <activity
             android:name=".Diary.DiaryActivity"
             android:exported="false"

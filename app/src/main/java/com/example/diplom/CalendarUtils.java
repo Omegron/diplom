@@ -1,5 +1,7 @@
 package com.example.diplom;
 
+import androidx.core.content.res.TypedArrayUtils;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -19,14 +21,24 @@ public class CalendarUtils {
         return LocalDate.parse(dateS, formatter);
     }
 
+    public static String formattedDateUa(LocalDate date) {
+        DateTimeFormatter formatterD = DateTimeFormatter.ofPattern("dd ");
+        DateTimeFormatter formatterY = DateTimeFormatter.ofPattern(" yyyy");
+        return date.format(formatterD) + monthUa(date) + date.format(formatterY);
+    }
+
     public static String monthYearFromDate(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-        return date.format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" yyyy");
+        return monthUa(date) + date.format(formatter);
     }
 
     public static String monthDayFromDate(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d");
-        return date.format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" d");
+        return monthUa(date) + date.format(formatter);
+    }
+
+    public static String monthDayName(DayOfWeek dayOfWeek) {
+        return dayUa(dayOfWeek);
     }
 
     public static ArrayList<LocalDate> daysInMonthArray() {
@@ -78,5 +90,33 @@ public class CalendarUtils {
             current = current.minusDays(1);
         }
         return null;
+    }
+
+    public static String monthUa(LocalDate date) {
+        String[] monthEn = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
+        String[] monthUa = {"Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
+
+        String month = "";
+        for (int i = 0; i < monthEn.length; i++) {
+            if (monthEn[i].equals(date.getMonth().toString())) {
+                month = monthUa[i];
+                break;
+            }
+        }
+        return month;
+    }
+
+    public static String dayUa(DayOfWeek dayOfWeek) {
+        String[] dayEn = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
+        String[] dayUa = {"Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя"};
+
+        String day = "";
+        for (int i = 0; i < dayEn.length; i++) {
+            if (dayEn[i].equals(dayOfWeek.toString())) {
+                day = dayUa[i];
+                break;
+            }
+        }
+        return day;
     }
 }

@@ -130,7 +130,6 @@ public class DailyViewActivity extends AppCompatActivity implements PopupMenu.On
                 @Override
                 public void run() {
                     eventsListAdapter.notifyItemChanged(finalPositionEvent);
-                    //eventsListAdapter.notifyDataSetChanged();
                 }
             });
         }
@@ -165,9 +164,8 @@ public class DailyViewActivity extends AppCompatActivity implements PopupMenu.On
 
     private void setDayView() {
         monthDayText.setText(CalendarUtils.monthDayFromDate(selectedDate));
-        String dayOfWeek = selectedDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+        String dayOfWeek = CalendarUtils.monthDayName(selectedDate.getDayOfWeek());
         dayOfWeekTV.setText(dayOfWeek);
-        //setEventAdapter();
     }
 
     public void previousDayAction(View view) {
