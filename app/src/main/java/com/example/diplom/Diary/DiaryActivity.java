@@ -313,6 +313,10 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
             CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
             setMonthView(cellView);
             updateRecycler(checks);
+        } else {
+            CalendarUtils.selectedDate = LocalDate.now();
+            setMonthView(cellView);
+            updateRecycler(checks);
         }
     }
 

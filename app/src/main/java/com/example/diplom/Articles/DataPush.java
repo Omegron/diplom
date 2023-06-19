@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.diplom.R;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,10 +58,10 @@ public class DataPush extends AppCompatActivity {
             articlesList4.add(articles.get(i));
         }
 
-        mList.add(new DataModel(articlesList1 , "Instant Food and Noodles"));
-        mList.add(new DataModel(articlesList2,"Stationary"));
-        mList.add(new DataModel(articlesList3,"Home Care"));
-        mList.add(new DataModel(articlesList4 ,"Grocery & Staples"));
+        mList.add(new DataModel(articlesList1 , "Тема 1"));
+        mList.add(new DataModel(articlesList2,"Тема 2"));
+        mList.add(new DataModel(articlesList3,"Тема 3"));
+        mList.add(new DataModel(articlesList4 ,"Тема 4"));
 
         return mList;
     }

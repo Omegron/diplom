@@ -19,8 +19,8 @@ public class ChecksDataPush extends AppCompatActivity {
     private Tasks taskD;
     private ChecksDB databaseC;
     private Checks check;
-    private final List<String> tasks = Arrays.asList("Завдання 1", "Завдання 2", "Завдання 3", "Завдання 4",
-            "Завдання 5", "Завдання 6", "Завдання 7", "Завдання 8", "Завдання 9", "Завдання 10");
+    private final List<String> tasks = Arrays.asList("Работа", "Завдання 10", "Завдання 9", "Завдання 8", "Завдання 7",
+            "Завдання 6", "Завдання 5", "Завдання 4", "Завдання 3", "Завдання 2", "Завдання 1");
 
     void tasksDBDataPush(Context context) {
 

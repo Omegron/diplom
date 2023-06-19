@@ -9,6 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.diplom.R;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class ArticleTextActivity extends AppCompatActivity {
     private TextView text_content;
     private String[] array_articles;
@@ -26,7 +30,21 @@ public class ArticleTextActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             int id = intent.getIntExtra("id", 0);
-            text_content.setText(array_articles[id -1]);
+            if (id == 2) {
+                String test = "";
+                try {
+                    InputStream inputStream = getAssets().open("articles.txt");
+                    int size = inputStream.available();
+                    byte[] buffer = new byte[size];
+                    inputStream.read(buffer);
+                    test = new String(buffer);
+                } catch (IOException e){
+                    System.out.println("Error");
+                }
+                text_content.setText(test);
+            } else {
+                text_content.setText(array_articles[id - 1]);
+            }
         }
     }
 }

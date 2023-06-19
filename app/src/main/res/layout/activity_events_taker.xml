@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Name:"
+        android:text="Задача:"
         android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="@color/black"/>
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Date"
+        android:text="Дата"
         android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="@color/black"/>
@@ -43,7 +43,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="Зберегти"
         android:textColor="@color/black"
         android:background="@null"
         android:textStyle="bold"

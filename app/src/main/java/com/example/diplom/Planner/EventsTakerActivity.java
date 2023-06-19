@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import java.text.SimpleDateFormat;
 public class EventsTakerActivity extends AppCompatActivity {
 
     private EditText eventTaskEditText;
+    private TextView eventDateTextView;
     private Events events;
     private boolean isOldEvent = false;
 
@@ -26,6 +28,9 @@ public class EventsTakerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_events_taker);
 
         eventTaskEditText = findViewById(R.id.eventTaskEditText);
+        eventDateTextView = findViewById(R.id.eventDateTextView);
+
+        eventDateTextView.setText(CalendarUtils.formattedDateUa(CalendarUtils.selectedDate));
 
         Button eventSave = findViewById(R.id.eventSave);
 

@@ -183,7 +183,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/checksRecyclerView"
@@ -202,7 +202,8 @@
             android:layout_marginBottom="26dp"
             android:contentDescription="@string/add_new_note"
             android:labelFor="@id/fab_add"
-            android:src="@drawable/ic_plus_icon" />
+            android:src="@drawable/ic_plus_icon"
+            android:background="@color/blue"/>
 
     </RelativeLayout>
 
