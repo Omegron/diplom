@@ -39,29 +39,29 @@ public class DataPush extends AppCompatActivity {
         articles = database.articlesDAO().getAll();
 
         List<Articles> articlesList1 = new ArrayList<>();
-        for (int i = 20; i > 15; i--) {
+        for (int i = 19; i > 14; i--) {
             articlesList1.add(articles.get(i));
         }
 
         List<Articles> articlesList2 = new ArrayList<>();
-        for (int i = 15; i > 10; i--) {
+        for (int i = 14; i > 9; i--) {
             articlesList2.add(articles.get(i));
         }
 
         List<Articles> articlesList3 = new ArrayList<>();
-        for (int i = 10; i > 5; i--) {
+        for (int i = 9; i > 4; i--) {
             articlesList3.add(articles.get(i));
         }
 
         List<Articles> articlesList4 = new ArrayList<>();
-        for (int i = 5; i > 0; i--) {
+        for (int i = 4; i > -1; i--) {
             articlesList4.add(articles.get(i));
         }
 
-        mList.add(new DataModel(articlesList1 , "Тема 1"));
-        mList.add(new DataModel(articlesList2,"Тема 2"));
-        mList.add(new DataModel(articlesList3,"Тема 3"));
-        mList.add(new DataModel(articlesList4 ,"Тема 4"));
+        mList.add(new DataModel(articlesList1 , "Навчання"));
+        mList.add(new DataModel(articlesList2,"Здоров'я"));
+        mList.add(new DataModel(articlesList3,"Тайм-менеджмент"));
+        mList.add(new DataModel(articlesList4 ,"Лідерство"));
 
         return mList;
     }

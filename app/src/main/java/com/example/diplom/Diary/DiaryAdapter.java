@@ -23,7 +23,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryViewHolder> {
     private Entries entry;
     private final OnItemListener onItemListener;
     private final int cellView;
-    private EntriesDB database;
+    private DiaryDB database;
 
     public DiaryAdapter(Activity activity, ArrayList<LocalDate> days, OnItemListener onItemListener, int cellView) {
         this.activity = activity;
@@ -45,20 +45,14 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DiaryViewHolder holder, int position) {
+        holder.eventState.setVisibility(View.GONE);
+
         final LocalDate date = days.get(position);
 
-        database = EntriesDB.getInstance(activity);
-        entry = database.entriesDAO().getDay(CalendarUtils.formattedDate(date));
+        database = DiaryDB.getInstance(activity);
+        entry = database.diaryDAO().getDayE(CalendarUtils.formattedDate(date));
 
         holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
-
-        if(date.equals(CalendarUtils.selectedDate)) {
-            holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_gray));
-        } else if(date.equals(LocalDate.now())) {
-            holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_yellow));
-        } else {
-            holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_white));
-        }
 
         if (entry != null) {
             holder.rating.setText(entry.getRating());
@@ -105,19 +99,14 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryViewHolder> {
             holder.rating.setVisibility(View.VISIBLE);
         }
 
-        if(date.equals(CalendarUtils.selectedDate)) {
-            holder.parentView.setBackgroundColor(Color.LTGRAY);
-        } else if(date.equals(LocalDate.now())) {
-            holder.parentView.setBackgroundColor(Color.YELLOW);
-        } else {
-            holder.parentView.setBackgroundColor(Color.WHITE);
-        }
 
         if(date.equals(LocalDate.now())) {
-            holder.parentView.setBackgroundColor(Color.YELLOW);
+            holder.dayState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.frame_yellow));
+            holder.dayState.setVisibility((View.VISIBLE));
         }
         if(date.equals(CalendarUtils.selectedDate)) {
-            holder.parentView.setBackgroundColor(Color.LTGRAY);
+            holder.dayState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.frame_blue));
+            holder.dayState.setVisibility((View.VISIBLE));
         }
         if (date.isAfter(LocalDate.now())) {
             holder.dayOfMonth.setTextColor(Color.LTGRAY);

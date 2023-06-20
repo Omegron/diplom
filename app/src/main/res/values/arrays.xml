@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="articles_names_array">
-        <item>Стаття 1</item>
-        <item>Стаття 2</item>
-        <item>Стаття 3</item>
-        <item>Стаття 4</item>
-        <item>Стаття 5</item>
+        <item>Як треба та не треба вчитися</item>
+        <item>Як ефективно вчитися вдома?</item>
+        <item>Вчимося вчитися: Як налаштувати свій мозок на ефективне навчання</item>
+        <item>Вчимося запам’ятовувати інформацію швидше та краще</item>
+        <item>Як краще запам\'ятовувати нову інформацію: поради для школярів і студентів</item>
         <item>Стаття 6</item>
         <item>Стаття 7</item>
         <item>Стаття 8</item>
@@ -16,12 +16,11 @@
         <item>Стаття 13</item>
         <item>Стаття 14</item>
         <item>Стаття 15</item>
-        <item>Стаття 16</item>
-        <item>Стаття 17</item>
-        <item>Стаття 18</item>
+        <item>Лідерство: що це таке і кого називають лідером</item>
+        <item>Як стати лідером і що для цього потрібно?</item>
+        <item>9 навичок та світоглядів, що зроблять вас успішним лідером</item>
         <item>Стаття 19</item>
         <item>Стаття 20</item>
-        <item>Test</item>
     </string-array>
 
     <string-array name="articles_texts_array">

@@ -5,8 +5,6 @@ import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.diplom.CalendarUtils;
-import com.example.diplom.Diary.ChecksTasks.Tasks;
-import com.example.diplom.Diary.ChecksTasks.TasksDB;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -15,32 +13,30 @@ import java.util.Objects;
 
 public class ChecksDataPush extends AppCompatActivity {
 
-    private TasksDB databaseT;
+    private DiaryDB database;
     private Tasks taskD;
-    private ChecksDB databaseC;
     private Checks check;
     private final List<String> tasks = Arrays.asList("Работа", "Завдання 10", "Завдання 9", "Завдання 8", "Завдання 7",
             "Завдання 6", "Завдання 5", "Завдання 4", "Завдання 3", "Завдання 2", "Завдання 1");
 
     void tasksDBDataPush(Context context) {
 
-        databaseT = TasksDB.getInstance(context);
-        if (databaseT.tasksDAO().getAll().isEmpty()) {
+        database = DiaryDB.getInstance(context);
+        if (database.diaryDAO().getAllTasks().isEmpty()) {
             for (String task : tasks) {
                 taskD = new Tasks();
                 taskD.setTask(task);
-                databaseT.tasksDAO().insert(taskD);
+                database.diaryDAO().insertTask(taskD);
             }
         }
 
     }
 
-    void checksForDayPush(Context context, LocalDate date) {
+    void checksForDayPush(LocalDate date) {
 
-        databaseC = ChecksDB.getInstance(context);
-        List<Tasks> tasks = databaseT.tasksDAO().getAll();
+        List<Tasks> tasks = database.diaryDAO().getAllTasks();
 
-        List<Checks> checks = databaseC.checksDAO().getDay(CalendarUtils.formattedDate(date));
+        List<Checks> checks = database.diaryDAO().getDayC(CalendarUtils.formattedDate(date));
 
         if (!checks.isEmpty()) {
             for (int i = 0; i < tasks.size(); i++) {
@@ -55,7 +51,7 @@ public class ChecksDataPush extends AppCompatActivity {
                     check = new Checks();
                     check.setTask(tasks.get(i).getTask());
                     check.setDate(CalendarUtils.formattedDate(date));
-                    databaseC.checksDAO().insert(check);
+                    database.diaryDAO().insertCheck(check);
                     checks.add(check);
                 }
             }
@@ -64,22 +60,22 @@ public class ChecksDataPush extends AppCompatActivity {
                 check = new Checks();
                 check.setTask(task.getTask());
                 check.setDate(CalendarUtils.formattedDate(date));
-                databaseC.checksDAO().insert(check);
+                database.diaryDAO().insertCheck(check);
             }
         }
     }
 
     void deleteChecksForDay(String task) {
 
-        databaseT.tasksDAO().deleteByTask(task);
-        databaseC.checksDAO().deleteByTask(task);
+        database.diaryDAO().deleteByTaskT(task);
+        database.diaryDAO().deleteByTaskC(task);
 
     }
 
     void updateChecksForDay(String taskOld, String taskNew) {
 
-        databaseT.tasksDAO().updateTask(taskOld, taskNew);
-        databaseC.checksDAO().updateTask(taskOld, taskNew);
+        database.diaryDAO().updateTaskT(taskOld, taskNew);
+        database.diaryDAO().updateTaskC(taskOld, taskNew);
 
     }
 
@@ -87,12 +83,12 @@ public class ChecksDataPush extends AppCompatActivity {
 
         taskD = new Tasks();
         taskD.setTask(task);
-        databaseT.tasksDAO().insert(taskD);
+        database.diaryDAO().insertTask(taskD);
 
         check = new Checks();
         check.setTask(task);
         check.setDate(CalendarUtils.formattedDate(date));
-        databaseC.checksDAO().insert(check);
+        database.diaryDAO().insertCheck(check);
     }
 
 }

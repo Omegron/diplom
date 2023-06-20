@@ -44,9 +44,20 @@
         app:layout_constraintVertical_bias="0.5"
         android:src="@drawable/state_0_white"/>
     <ImageView
+        android:id="@+id/dayState"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        android:src="@drawable/frame_blue"/>
+    <ImageView
         android:id="@+id/eventState"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/state_0_white"/>

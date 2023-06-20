@@ -54,9 +54,11 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
 
         if(date.equals(CalendarUtils.selectedDate)) {
-            holder.parentView.setBackgroundColor(Color.LTGRAY);
+            holder.dayState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.frame_blue));
+            holder.dayState.setVisibility((View.VISIBLE));
         } else if(date.equals(LocalDate.now())) {
-            holder.parentView.setBackgroundColor(Color.YELLOW);
+            holder.dayState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.frame_yellow));
+            holder.dayState.setVisibility((View.VISIBLE));
         } else {
             holder.parentView.setBackgroundColor(Color.WHITE);
         }
@@ -74,14 +76,6 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                     holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_2));
                 } else {
                     holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_1));
-                }
-            } else {
-                if(date.equals(CalendarUtils.selectedDate)) {
-                    holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_gray));
-                } else if(date.equals(LocalDate.now())) {
-                    holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_yellow));
-                } else {
-                    holder.eventState.setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.state_0_white));
                 }
             }
             holder.dayOfMonth.setTextColor(Color.BLACK);

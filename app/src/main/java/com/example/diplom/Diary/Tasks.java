@@ -1,4 +1,4 @@
-package com.example.diplom.Diary.ChecksTasks;
+package com.example.diplom.Diary;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

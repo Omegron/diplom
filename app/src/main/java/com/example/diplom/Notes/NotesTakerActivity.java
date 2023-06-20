@@ -1,6 +1,7 @@
 package com.example.diplom.Notes;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.Intent;

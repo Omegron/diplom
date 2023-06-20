@@ -1,5 +1,6 @@
 package com.example.diplom.Diary;
 
+import android.media.Image;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,12 +21,14 @@ public class DiaryViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public final ImageView eventState;
     public final TextView rating;
     public final ImageView emotions;
+    public final ImageView dayState;
     private final DiaryAdapter.OnItemListener onItemListener;
     public DiaryViewHolder(@NonNull View itemView, DiaryAdapter.OnItemListener onItemListener, ArrayList<LocalDate> days) {
         super(itemView);
         parentView = itemView.findViewById(R.id.parentView);
         dayOfMonth = itemView.findViewById(R.id.cellDayText);
         eventState = itemView.findViewById(R.id.eventState);
+        dayState = itemView.findViewById(R.id.dayState);
         rating = itemView.findViewById(R.id.cellDayRating);
         emotions = itemView.findViewById(R.id.cellDayEmotions);
         this.onItemListener = onItemListener;

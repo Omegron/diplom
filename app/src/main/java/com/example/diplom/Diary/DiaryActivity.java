@@ -45,7 +45,6 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class DiaryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         DiaryAdapter.OnItemListener, PopupMenu.OnMenuItemClickListener {
@@ -61,12 +60,11 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
     private List<Entries> entries;
     private Entries entry;
     private List<Checks> checks = new ArrayList<>();
-    private ChecksDB databaseC;
     private DiaryAdapter diaryAdapter;
     private ChecksListAdapter checksListAdapter;
     private Checks selectedCheck;
     private ChecksDataPush checksDataPush = new ChecksDataPush();
-    private EntriesDB databaseE;
+    private DiaryDB database;
     private int cellView = 0;
 
 
@@ -86,15 +84,14 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
 
         FloatingActionButton fab_add = findViewById(R.id.fab_add);
 
-        databaseE = EntriesDB.getInstance(this);
-        entries = databaseE.entriesDAO().getAll();
+        database = DiaryDB.getInstance(this);
+        entries = database.diaryDAO().getAllEntries();
 
         CalendarUtils.selectedDate = LocalDate.now();
 
-        databaseC = ChecksDB.getInstance(this);
         checksDataPush.tasksDBDataPush(this);
-        checksDataPush.checksForDayPush(this, CalendarUtils.selectedDate);
-        checks = databaseC.checksDAO().getDay(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
+        checksDataPush.checksForDayPush(CalendarUtils.selectedDate);
+        checks = database.diaryDAO().getDayC(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
 
         initWidgets();
 
@@ -140,7 +137,7 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
         if (requestCode == 101) {
             if (resultCode == Activity.RESULT_OK) {
                 Entries new_entries = (Entries) data.getSerializableExtra("entry");
-                databaseE.entriesDAO().insert(new_entries);
+                database.diaryDAO().insertEntry(new_entries);
                 int positionCalendar = 0;
                 for (int i = 0; i < daysInMonth.size(); i++) {
                     if (new_entries.getDate().equals(CalendarUtils.formattedDate(daysInMonth.get(i)))) {
@@ -154,8 +151,8 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
         if (requestCode == 102) {
             if (resultCode == Activity.RESULT_OK) {
                 Entries new_entries = (Entries) data.getSerializableExtra("entry");
-                databaseE.entriesDAO().updateEmotion(new_entries.getID(), new_entries.getEmotion());
-                databaseE.entriesDAO().updateNote(new_entries.getID(), new_entries.getNote());
+                database.diaryDAO().updateEmotion(new_entries.getID(), new_entries.getEmotion());
+                database.diaryDAO().updateNote(new_entries.getID(), new_entries.getNote());
 
                 int positionCalendar = 0;
                 for (int i = 0; i < daysInMonth.size(); i++) {
@@ -203,7 +200,7 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
                 }
             }
             check.setState(checkBox.isChecked());
-            databaseC.checksDAO().updateState(check.getID(), check.getState());
+            database.diaryDAO().updateState(check.getID(), check.getState());
             int checkCount = 0;
             double rating;
             for (Checks checkC : checks) {
@@ -213,16 +210,16 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
             }
             rating = (10.0 / checks.size()) * checkCount;
             String rating_2 = new DecimalFormat("#0.00").format(rating);
-            entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
+            entry = database.diaryDAO().getDayE(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
             if (entry != null) {
-                databaseE.entriesDAO().updateRating(entry.getID(), rating_2);
+                database.diaryDAO().updateRating(entry.getID(), rating_2);
             } else {
                 entry = new Entries();
                 entry.setNote("");
                 entry.setEmotion("0");
                 entry.setRating(rating_2);
                 entry.setDate(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
-                databaseE.entriesDAO().insert(entry);
+                database.diaryDAO().insertEntry(entry);
             }
             int positionCalendar = 0;
             for (int i = 0; i < daysInMonth.size(); i++) {
@@ -258,7 +255,7 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
             updateRecycler(checks);
             for (Entries entriesC : entries) {
                 CalendarUtils.selectedDate = formattedDateReverse(entriesC.getDate());
-                checks = databaseC.checksDAO().getDay(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
+                checks = database.diaryDAO().getDayC(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
                 int checkCount = 0;
                 double rating;
                 for (Checks checkC : checks) {
@@ -268,9 +265,9 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
                 }
                 rating = (10.0 / checks.size()) * checkCount;
                 String rating_2 = new DecimalFormat("#0.00").format(rating);
-                entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
+                entry = database.diaryDAO().getDayE(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
                 entry.setRating(rating_2);
-                databaseE.entriesDAO().updateRating(entry.getID(), rating_2);
+                database.diaryDAO().updateRating(entry.getID(), rating_2);
             }
             diaryAdapter.notifyDataSetChanged();
             return true;
@@ -325,8 +322,8 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
         if(date != null && date.getMonth().equals(CalendarUtils.selectedDate.getMonth()) && !date.isAfter(LocalDate.now())) {
             CalendarUtils.selectedDate = date;
             checksDataPush.tasksDBDataPush(this);
-            checksDataPush.checksForDayPush(this, CalendarUtils.selectedDate);
-            checks = databaseC.checksDAO().getDay(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
+            checksDataPush.checksForDayPush(CalendarUtils.selectedDate);
+            checks = database.diaryDAO().getDayC(CalendarUtils.formattedDate(CalendarUtils.selectedDate));
             setMonthView(cellView);
             updateRecycler(checks);
         }
@@ -354,7 +351,7 @@ public class DiaryActivity extends AppCompatActivity implements NavigationView.O
         Intent intent = new Intent(DiaryActivity.this, DiaryEntryActivity.class);
         boolean isEntry = false;
         if (!entries.isEmpty()) {
-            Entries entry = databaseE.entriesDAO().getDay(CalendarUtils.formattedDate(selectedDate));
+            Entries entry = database.diaryDAO().getDayE(CalendarUtils.formattedDate(selectedDate));
             if (entry != null) {
                 isEntry = true;
                 intent.putExtra("old_entry", entry);

@@ -22,7 +22,7 @@ public class DiaryEntryActivity extends AppCompatActivity {
     private EditText entryNote;
     private Entries entries;
     private String emotion = "0";
-    private String rating = "0.0";
+    private String rating = "0.00";
     private boolean isOldEntry = false;
 
     @Override
